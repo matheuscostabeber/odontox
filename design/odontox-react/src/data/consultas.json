@@ -1,0 +1,16 @@
+[
+  { "id": 1, "date": "2026-06-17", "hora": "08:30", "duracao": 60, "pacienteId": 1, "dentistaId": 1, "procedimento": "Profilaxia", "status": "atendida", "obs": "" },
+  { "id": 2, "date": "2026-06-17", "hora": "09:00", "duracao": 45, "pacienteId": 3, "dentistaId": 2, "procedimento": "Manutenção ortodôntica", "status": "agendada", "obs": "Trocar elásticos." },
+  { "id": 3, "date": "2026-06-17", "hora": "10:00", "duracao": 90, "pacienteId": 5, "dentistaId": 3, "procedimento": "Tratamento de canal", "status": "agendada", "obs": "" },
+  { "id": 4, "date": "2026-06-17", "hora": "11:30", "duracao": 60, "pacienteId": 2, "dentistaId": 1, "procedimento": "Restauração", "status": "ausente", "obs": "" },
+  { "id": 5, "date": "2026-06-17", "hora": "14:00", "duracao": 60, "pacienteId": 6, "dentistaId": 4, "procedimento": "Avaliação para implante", "status": "agendada", "obs": "Trazer tomografia." },
+  { "id": 6, "date": "2026-06-17", "hora": "15:00", "duracao": 45, "pacienteId": 7, "dentistaId": 2, "procedimento": "Documentação ortodôntica", "status": "agendada", "obs": "" },
+  { "id": 7, "date": "2026-06-17", "hora": "16:00", "duracao": 30, "pacienteId": 8, "dentistaId": 1, "procedimento": "Retorno", "status": "cancelada", "obs": "Paciente remarcou." },
+  { "id": 8, "date": "2026-06-17", "hora": "16:30", "duracao": 90, "pacienteId": 4, "dentistaId": 3, "procedimento": "Tratamento de canal", "status": "agendada", "obs": "" },
+  { "id": 9, "date": "2026-06-17", "hora": "09:30", "duracao": 60, "pacienteId": 9, "dentistaId": 4, "procedimento": "Enxerto ósseo", "status": "atendida", "obs": "" },
+  { "id": 10, "date": "2026-06-16", "hora": "10:00", "duracao": 60, "pacienteId": 1, "dentistaId": 1, "procedimento": "Restauração", "status": "atendida", "obs": "" },
+  { "id": 11, "date": "2026-05-20", "hora": "09:00", "duracao": 45, "pacienteId": 1, "dentistaId": 1, "procedimento": "Profilaxia", "status": "atendida", "obs": "" },
+  { "id": 12, "date": "2026-04-10", "hora": "14:00", "duracao": 90, "pacienteId": 1, "dentistaId": 3, "procedimento": "Tratamento de canal", "status": "atendida", "obs": "" },
+  { "id": 13, "date": "2026-06-18", "hora": "09:00", "duracao": 60, "pacienteId": 2, "dentistaId": 1, "procedimento": "Profilaxia", "status": "agendada", "obs": "" },
+  { "id": 14, "date": "2026-06-18", "hora": "11:00", "duracao": 45, "pacienteId": 3, "dentistaId": 2, "procedimento": "Manutenção ortodôntica", "status": "agendada", "obs": "" }
+]

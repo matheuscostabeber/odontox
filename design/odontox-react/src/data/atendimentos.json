@@ -1,0 +1,7 @@
+[
+  { "id": 1, "consultaId": 1, "procedimento_realizado": "Profilaxia completa + aplicação de flúor", "observacoes_clinicas": "Higiene satisfatória. Leve sangramento gengival na região posterior. Orientado uso de fio dental diário.", "registrado_em": "2026-06-17" },
+  { "id": 2, "consultaId": 9, "procedimento_realizado": "Enxerto ósseo região 36", "observacoes_clinicas": "Procedimento sem intercorrências. Prescrito antibiótico e analgésico. Retorno em 7 dias para reavaliação.", "registrado_em": "2026-06-17" },
+  { "id": 3, "consultaId": 10, "procedimento_realizado": "Restauração em resina composta dente 26", "observacoes_clinicas": "Cárie oclusal removida. Restauração concluída e ajustada. Oclusão verificada.", "registrado_em": "2026-06-16" },
+  { "id": 4, "consultaId": 11, "procedimento_realizado": "Profilaxia + raspagem supragengival", "observacoes_clinicas": "Remoção de tártaro. Paciente orientado sobre escovação.", "registrado_em": "2026-05-20" },
+  { "id": 5, "consultaId": 12, "procedimento_realizado": "Tratamento endodôntico dente 46", "observacoes_clinicas": "Canal instrumentado e obturado em sessão única. Indicada coroa protética.", "registrado_em": "2026-04-10" }
+]

@@ -1,0 +1,421 @@
+{
+  "dentistas": [
+    {
+      "id": 1,
+      "nome": "Dra. Helena Marques",
+      "cro": "CRO-SP 45821",
+      "especialidade": "Clínico Geral",
+      "telefone": "(11) 98812-4477",
+      "email": "helena@odontox.com",
+      "ativo": true,
+      "cor": "#0E7A86",
+      "foto_url": "/static/uploads/dentistas/dentista-1.jpg"
+    },
+    {
+      "id": 2,
+      "nome": "Dr. Rafael Antunes",
+      "cro": "CRO-SP 51203",
+      "especialidade": "Ortodontia",
+      "telefone": "(11) 99124-7781",
+      "email": "rafael@odontox.com",
+      "ativo": true,
+      "cor": "#2563EB",
+      "foto_url": "/static/uploads/dentistas/dentista-2.jpg"
+    },
+    {
+      "id": 3,
+      "nome": "Dra. Camila Souza",
+      "cro": "CRO-SP 48890",
+      "especialidade": "Endodontia",
+      "telefone": "(11) 99633-1290",
+      "email": "camila@odontox.com",
+      "ativo": true,
+      "cor": "#7C3AED",
+      "foto_url": "/static/uploads/dentistas/dentista-3.jpg"
+    },
+    {
+      "id": 4,
+      "nome": "Dr. Bruno Tavares",
+      "cro": "CRO-SP 39114",
+      "especialidade": "Implantodontia",
+      "telefone": "(11) 98455-2093",
+      "email": "bruno@odontox.com",
+      "ativo": true,
+      "cor": "#C2410C",
+      "foto_url": "/static/uploads/dentistas/dentista-4.jpg"
+    },
+    {
+      "id": 5,
+      "nome": "Dra. Letícia Ramos",
+      "cro": "CRO-SP 52771",
+      "especialidade": "Odontopediatria",
+      "telefone": "(11) 99001-7745",
+      "email": "leticia@odontox.com",
+      "ativo": true,
+      "cor": "#0891B2",
+      "foto_url": "/static/uploads/dentistas/dentista-5.jpg"
+    },
+    {
+      "id": 6,
+      "nome": "Dr. Tiago Mendes",
+      "cro": "CRO-SP 60001",
+      "especialidade": "Periodontia",
+      "telefone": "(11) 97000-1234",
+      "email": "tiago@odontox.com",
+      "ativo": true,
+      "cor": "#15803D",
+      "foto_url": "/static/uploads/dentistas/dentista-6.jpg"
+    }
+  ],
+  "pacientes": [
+    {
+      "id": 1,
+      "nome": "Mariana Lopes",
+      "cpf": "384.221.905-11",
+      "nascimento": "1991-03-14",
+      "telefone": "(11) 99812-3344",
+      "email": "mariana.lopes@email.com",
+      "obs": "Alergia a penicilina. Hipertensa controlada."
+    },
+    {
+      "id": 2,
+      "nome": "Carlos Eduardo Pinto",
+      "cpf": "512.880.331-04",
+      "nascimento": "1985-09-02",
+      "telefone": "(11) 98233-7781",
+      "email": "cadu.pinto@email.com",
+      "obs": "Bruxismo. Usa placa miorrelaxante."
+    },
+    {
+      "id": 3,
+      "nome": "Júlia Fernandes",
+      "cpf": "402.119.776-50",
+      "nascimento": "2003-11-28",
+      "telefone": "(11) 99744-1120",
+      "email": "julia.fernandes@email.com",
+      "obs": "Em tratamento ortodôntico."
+    },
+    {
+      "id": 4,
+      "nome": "Roberto Almeida",
+      "cpf": "298.443.012-77",
+      "nascimento": "1978-06-19",
+      "telefone": "(11) 98455-9001",
+      "email": "roberto.almeida@email.com",
+      "obs": "Diabético tipo 2."
+    },
+    {
+      "id": 5,
+      "nome": "Patrícia Nogueira",
+      "cpf": "731.205.118-92",
+      "nascimento": "1996-01-07",
+      "telefone": "(11) 99120-4456",
+      "email": "patricia.n@email.com",
+      "obs": "Sensibilidade dentinária."
+    },
+    {
+      "id": 6,
+      "nome": "Anderson Reis",
+      "cpf": "160.778.443-21",
+      "nascimento": "1969-12-30",
+      "telefone": "(11) 98677-3320",
+      "email": "anderson.reis@email.com",
+      "obs": "Tabagista. Avaliar saúde periodontal."
+    },
+    {
+      "id": 7,
+      "nome": "Beatriz Carvalho",
+      "cpf": "885.330.219-08",
+      "nascimento": "2008-04-22",
+      "telefone": "(11) 99033-8812",
+      "email": "bia.carvalho@email.com",
+      "obs": "Menor de idade. Responsável: Sandra Carvalho."
+    },
+    {
+      "id": 8,
+      "nome": "Felipe Moraes",
+      "cpf": "044.912.806-33",
+      "nascimento": "1990-08-11",
+      "telefone": "(11) 98800-1199",
+      "email": "felipe.moraes@email.com",
+      "obs": "Sem comorbidades relatadas."
+    },
+    {
+      "id": 9,
+      "nome": "Sandra Oliveira",
+      "cpf": "623.117.490-65",
+      "nascimento": "1962-02-05",
+      "telefone": "(11) 99455-6677",
+      "email": "sandra.oliveira@email.com",
+      "obs": "Osteoporose. Uso de bifosfonatos."
+    },
+    {
+      "id": 10,
+      "nome": "Lucas Barreto",
+      "cpf": "317.664.205-49",
+      "nascimento": "1999-07-16",
+      "telefone": "(11) 98122-0098",
+      "email": "lucas.barreto@email.com",
+      "obs": ""
+    },
+    {
+      "id": 11,
+      "nome": "Gabriel Souza Lima",
+      "cpf": "555.444.333-22",
+      "nascimento": "1995-08-20",
+      "telefone": "(11) 96666-5555",
+      "email": "gabriel.lima@email.com",
+      "obs": "Alergia a dipirona. Hipertenso — monitorar pressão."
+    }
+  ],
+  "consultas": [
+    {
+      "id": 1,
+      "paciente_id": 1,
+      "dentista_id": 1,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "08:30",
+      "duracao": 60,
+      "procedimento": "Profilaxia",
+      "status": "atendida",
+      "obs": ""
+    },
+    {
+      "id": 2,
+      "paciente_id": 3,
+      "dentista_id": 2,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "09:00",
+      "duracao": 45,
+      "procedimento": "Manutenção ortodôntica",
+      "status": "atendida",
+      "obs": "Trocar elásticos."
+    },
+    {
+      "id": 3,
+      "paciente_id": 5,
+      "dentista_id": 3,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "10:00",
+      "duracao": 90,
+      "procedimento": "Tratamento de canal",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 4,
+      "paciente_id": 2,
+      "dentista_id": 1,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "11:30",
+      "duracao": 60,
+      "procedimento": "Restauração",
+      "status": "ausente",
+      "obs": ""
+    },
+    {
+      "id": 5,
+      "paciente_id": 6,
+      "dentista_id": 4,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "14:00",
+      "duracao": 60,
+      "procedimento": "Avaliação para implante",
+      "status": "agendada",
+      "obs": "Trazer tomografia."
+    },
+    {
+      "id": 6,
+      "paciente_id": 7,
+      "dentista_id": 2,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "15:00",
+      "duracao": 45,
+      "procedimento": "Documentação ortodôntica",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 7,
+      "paciente_id": 8,
+      "dentista_id": 1,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "16:00",
+      "duracao": 30,
+      "procedimento": "Retorno",
+      "status": "cancelada",
+      "obs": "Paciente remarcou."
+    },
+    {
+      "id": 8,
+      "paciente_id": 4,
+      "dentista_id": 3,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "16:30",
+      "duracao": 90,
+      "procedimento": "Tratamento de canal",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 9,
+      "paciente_id": 9,
+      "dentista_id": 4,
+      "usuario_interno_id": null,
+      "data": "2026-06-17",
+      "hora": "09:30",
+      "duracao": 60,
+      "procedimento": "Enxerto ósseo",
+      "status": "atendida",
+      "obs": ""
+    },
+    {
+      "id": 10,
+      "paciente_id": 1,
+      "dentista_id": 1,
+      "usuario_interno_id": null,
+      "data": "2026-06-16",
+      "hora": "10:00",
+      "duracao": 60,
+      "procedimento": "Restauração",
+      "status": "atendida",
+      "obs": ""
+    },
+    {
+      "id": 11,
+      "paciente_id": 1,
+      "dentista_id": 1,
+      "usuario_interno_id": null,
+      "data": "2026-05-20",
+      "hora": "09:00",
+      "duracao": 45,
+      "procedimento": "Profilaxia",
+      "status": "atendida",
+      "obs": ""
+    },
+    {
+      "id": 12,
+      "paciente_id": 1,
+      "dentista_id": 3,
+      "usuario_interno_id": null,
+      "data": "2026-04-10",
+      "hora": "14:00",
+      "duracao": 90,
+      "procedimento": "Tratamento de canal",
+      "status": "atendida",
+      "obs": ""
+    },
+    {
+      "id": 13,
+      "paciente_id": 2,
+      "dentista_id": 1,
+      "usuario_interno_id": null,
+      "data": "2026-06-18",
+      "hora": "09:00",
+      "duracao": 60,
+      "procedimento": "Profilaxia",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 14,
+      "paciente_id": 3,
+      "dentista_id": 2,
+      "usuario_interno_id": null,
+      "data": "2026-06-18",
+      "hora": "11:00",
+      "duracao": 45,
+      "procedimento": "Manutenção ortodôntica",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 15,
+      "paciente_id": 10,
+      "dentista_id": 4,
+      "usuario_interno_id": 1,
+      "data": "2026-06-17",
+      "hora": "17:00",
+      "duracao": 90,
+      "procedimento": "Avaliação inicial + Raio-X",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 16,
+      "paciente_id": 6,
+      "dentista_id": 4,
+      "usuario_interno_id": 1,
+      "data": "2026-06-17",
+      "hora": "11:00",
+      "duracao": 60,
+      "procedimento": "Consulta",
+      "status": "agendada",
+      "obs": ""
+    },
+    {
+      "id": 17,
+      "paciente_id": 3,
+      "dentista_id": 4,
+      "usuario_interno_id": 1,
+      "data": "2026-06-17",
+      "hora": "15:00",
+      "duracao": 60,
+      "procedimento": "Profilaxia",
+      "status": "agendada",
+      "obs": ""
+    }
+  ],
+  "atendimentos": [
+    {
+      "id": 1,
+      "consulta_id": 1,
+      "procedimento_realizado": "Profilaxia completa + aplicação de flúor",
+      "observacoes_clinicas": "Higiene satisfatória. Leve sangramento gengival na região posterior. Orientado uso de fio dental diário.",
+      "registrado_em": "2026-06-21 05:35:10.022465"
+    },
+    {
+      "id": 2,
+      "consulta_id": 9,
+      "procedimento_realizado": "Enxerto ósseo região 36",
+      "observacoes_clinicas": "Procedimento sem intercorrências. Prescrito antibiótico e analgésico. Retorno em 7 dias para reavaliação.",
+      "registrado_em": "2026-06-21 05:35:10.026055"
+    },
+    {
+      "id": 3,
+      "consulta_id": 10,
+      "procedimento_realizado": "Restauração em resina composta dente 26",
+      "observacoes_clinicas": "Cárie oclusal removida. Restauração concluída e ajustada. Oclusão verificada.",
+      "registrado_em": "2026-06-21 05:35:10.029706"
+    },
+    {
+      "id": 4,
+      "consulta_id": 11,
+      "procedimento_realizado": "Profilaxia + raspagem supragengival",
+      "observacoes_clinicas": "Remoção de tártaro. Paciente orientado sobre escovação.",
+      "registrado_em": "2026-06-21 05:35:10.033438"
+    },
+    {
+      "id": 5,
+      "consulta_id": 12,
+      "procedimento_realizado": "Tratamento endodôntico dente 46",
+      "observacoes_clinicas": "Canal instrumentado e obturado em sessão única. Indicada coroa protética.",
+      "registrado_em": "2026-06-21 05:35:10.036972"
+    },
+    {
+      "id": 6,
+      "consulta_id": 2,
+      "procedimento_realizado": "Ajuste de aparelho ortodôntico e troca de elásticos",
+      "observacoes_clinicas": "Paciente em boa evolução. Próximo retorno em 30 dias.",
+      "registrado_em": "2026-06-21 05:39:55.549315"
+    }
+  ]
+}

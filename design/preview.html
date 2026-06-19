@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OdontoX · Preview navegável</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- global.css do projeto (inlinado para o preview) -->
+<style>
+:root { --ox-accent: #0E7A86; }
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; height: 100%; }
+body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; color: #1B2B2E; }
+input, select, textarea, button { font-family: inherit; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--ox-accent) !important; box-shadow: 0 0 0 3px rgba(14,122,134,.12); }
+.ox-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.ox-scroll::-webkit-scrollbar-thumb { background: #d3dddd; border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
+.ox-row:hover { background: #F6FAFA !important; }
+@keyframes oxFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes oxPop { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.ox-modal-back { animation: oxFade .16s ease; }
+.ox-modal { animation: oxPop .2s cubic-bezier(.2,.7,.3,1); }
+#__boot { height: 100vh; display: flex; align-items: center; justify-content: center; color: #5B6B6E; font-size: 14px; }
+</style>
+
+<!-- React/Router resolvidos por import map (ESM via esm.sh) -->
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.1.0",
+    "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
+    "react/jsx-dev-runtime": "https://esm.sh/react@19.1.0/jsx-dev-runtime",
+    "react-dom": "https://esm.sh/react-dom@19.1.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.1.0/client?external=react",
+    "react-router": "https://esm.sh/react-router@8.0.0?external=react,react-dom"
+  }
+}
+</script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+</head>
+<body>
+<div id="root"><div id="__boot">Carregando OdontoX…</div></div>
+
+<!-- Seletor de páginas (só do preview): pula para qualquer tela do app -->
+<div id="ox-pagepicker" style="position:fixed;right:16px;bottom:16px;z-index:99999;font-family:'Plus Jakarta Sans',system-ui,sans-serif">
+  <button id="ox-pp-toggle" style="display:flex;align-items:center;gap:8px;background:#0C2B2F;color:#fff;border:none;border-radius:12px;padding:11px 15px;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 22px rgba(12,43,47,.28);font-family:inherit">
+    <span style="font-size:15px">⌗</span> Páginas
+  </button>
+  <div id="ox-pp-menu" style="display:none;position:absolute;right:0;bottom:52px;width:220px;background:#fff;border:1px solid #E2EAEA;border-radius:14px;box-shadow:0 12px 40px rgba(12,43,47,.18);overflow:hidden;padding:6px">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:1px;color:#94A3A5;padding:8px 10px 6px">IR PARA A PÁGINA</div>
+    <div id="ox-pp-list"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var PAGES = [
+    { label: 'Login',              hash: '#/login',        auth: false },
+    { label: 'Esqueci minha senha', hash: '#/esqueci-senha', auth: false },
+    { label: 'Agenda',             hash: '#/agenda',       auth: true },
+    { label: 'Pacientes',          hash: '#/pacientes',    auth: true },
+    { label: 'Detalhe do paciente', hash: '#/paciente/6',  auth: true },
+    { label: 'Dentistas',          hash: '#/dentistas',    auth: true },
+  ];
+  var AUTH_KEY = 'odontox_auth';
+  var toggle = document.getElementById('ox-pp-toggle');
+  var menu = document.getElementById('ox-pp-menu');
+  var list = document.getElementById('ox-pp-list');
+
+  PAGES.forEach(function (p) {
+    var b = document.createElement('button');
+    b.textContent = p.label;
+    b.style.cssText = 'display:block;width:100%;text-align:left;background:transparent;border:none;border-radius:9px;padding:10px 11px;font-size:13.5px;font-weight:600;color:#1B2B2E;cursor:pointer;font-family:inherit';
+    b.onmouseenter = function () { b.style.background = '#F2F7F7'; };
+    b.onmouseleave = function () { b.style.background = 'transparent'; };
+    b.onclick = function () {
+      // garante o estado de login correto para a página alvo, depois navega
+      var isAuthed = !!localStorage.getItem(AUTH_KEY);
+      if (p.auth && !isAuthed) {
+        localStorage.setItem(AUTH_KEY, JSON.stringify({ nome: 'Recepção' }));
+      } else if (!p.auth && isAuthed) {
+        localStorage.removeItem(AUTH_KEY);
+      }
+      var changed = (p.auth && !isAuthed) || (!p.auth && isAuthed);
+      location.hash = p.hash;
+      menu.style.display = 'none';
+      if (changed) location.reload(); // re-inicializa o AuthProvider a partir do storage
+    };
+    list.appendChild(b);
+  });
+
+  toggle.onclick = function () {
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+  };
+  document.addEventListener('click', function (e) {
+    if (!document.getElementById('ox-pagepicker').contains(e.target)) menu.style.display = 'none';
+  });
+})();
+</script>
+
+<script>
+/*
+  Mini-carregador de módulos ESM+JSX para o PREVIEW.
+  Executa os arquivos reais de odontox-react/src/ no navegador:
+    1. busca o arquivo,
+    2. transpila JSX com Babel (runtime automático),
+    3. reescreve os imports relativos para blob: URLs (resolvendo extensões),
+    4. importa o módulo de entrada.
+  O app de produção continua usando Vite (src/main.jsx) — isto é só p/ visualizar aqui.
+*/
+(async () => {
+  const root = document.getElementById('root');
+  const fail = (e) => {
+    console.error(e);
+    root.innerHTML = '<div style="padding:40px;font:14px/1.6 monospace;color:#BE123C;white-space:pre-wrap">Falha ao carregar o preview:\n' + (e && e.message ? e.message : e) + '</div>';
+  };
+
+  try {
+    const APP = new URL('odontox-react/src/', document.baseURI).href;
+    const blobCache = new Map(); // realUrl -> Promise<blobUrl>
+
+    async function resolve(spec, importerUrl) {
+      const hasExt = /\.(jsx|js|json|css)$/.test(spec);
+      const exts = hasExt ? [''] : ['.jsx', '.js', '.json', '/index.jsx', '/index.js'];
+      for (const e of exts) {
+        const u = new URL(spec + e, importerUrl).href;
+        let r;
+        try { r = await fetch(u); } catch { continue; }
+        if (!r.ok) continue;
+        const ct = r.headers.get('content-type') || '';
+        const text = await r.text();
+        // descarta fallback de SPA (HTML) servido p/ caminho inexistente
+        if (ct.includes('text/html') || /^\s*</.test(text)) continue;
+        return { url: u, text };
+      }
+      throw new Error('Não foi possível resolver "' + spec + '" a partir de ' + importerUrl);
+    }
+
+    function rewriteImports(code, importerUrl) {
+      const lines = code.split('\n');
+      const jobs = [];
+      lines.forEach((line, i) => {
+        if (!/^\s*(import|export)\b/.test(line)) return;
+        const m = line.match(/((?:from|import)\s+)(['"])([^'"]+)\2/);
+        if (!m) return;
+        const spec = m[3];
+        if (!(spec[0] === '.' || spec[0] === '/')) return; // bare → import map
+        jobs.push((async () => {
+          const { url, text } = await resolve(spec, importerUrl);
+          const blobUrl = await getModule(url, text);
+          lines[i] = line.replace(m[2] + spec + m[2], m[2] + blobUrl + m[2]);
+        })());
+      });
+      return Promise.all(jobs).then(() => lines.join('\n'));
+    }
+
+    function getModule(url, text) {
+      if (blobCache.has(url)) return blobCache.get(url);
+      const p = (async () => {
+        let code;
+        if (url.endsWith('.json')) {
+          code = 'export default ' + text + ';';
+        } else if (url.endsWith('.css')) {
+          code = 'export default {};';
+        } else {
+          code = Babel.transform(text, {
+            presets: [['react', { runtime: 'automatic', development: false }]],
+            filename: url,
+          }).code;
+        }
+        code = await rewriteImports(code, url);
+        return URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+      })();
+      blobCache.set(url, p);
+      return p;
+    }
+
+    // módulo de entrada do preview: usa HashRouter (navegação funciona no iframe)
+    const entrySrc = [
+      "import React from 'react';",
+      "import { createRoot } from 'react-dom/client';",
+      "import { HashRouter } from 'react-router';",
+      "import App from './App';",
+      "import { AuthProvider } from './context/AuthContext';",
+      "import { ClinicProvider } from './context/ClinicContext';",
+      "import { ModalProvider } from './context/ModalContext';",
+      "createRoot(document.getElementById('root')).render(",
+      "  React.createElement(HashRouter, null,",
+      "    React.createElement(AuthProvider, null,",
+      "      React.createElement(ClinicProvider, null,",
+      "        React.createElement(ModalProvider, null,",
+      "          React.createElement(App, null))))));",
+    ].join('\n');
+
+    const entryCode = await rewriteImports(entrySrc, APP + '__entry__.js');
+    const entryUrl = URL.createObjectURL(new Blob([entryCode], { type: 'text/javascript' }));
+    await import(entryUrl);
+  } catch (e) {
+    fail(e);
+  }
+})();
+</script>
+</body>
+</html>

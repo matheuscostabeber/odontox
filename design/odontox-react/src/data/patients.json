@@ -1,0 +1,12 @@
+[
+  { "id": 1, "nome": "Mariana Lopes", "cpf": "384.221.905-11", "nascimento": "1991-03-14", "telefone": "(11) 99812-3344", "email": "mariana.lopes@email.com", "obs": "Alergia a penicilina. Hipertensa controlada." },
+  { "id": 2, "nome": "Carlos Eduardo Pinto", "cpf": "512.880.331-04", "nascimento": "1985-09-02", "telefone": "(11) 98233-7781", "email": "cadu.pinto@email.com", "obs": "Bruxismo. Usa placa miorrelaxante." },
+  { "id": 3, "nome": "Júlia Fernandes", "cpf": "402.119.776-50", "nascimento": "2003-11-28", "telefone": "(11) 99744-1120", "email": "julia.fernandes@email.com", "obs": "Em tratamento ortodôntico." },
+  { "id": 4, "nome": "Roberto Almeida", "cpf": "298.443.012-77", "nascimento": "1978-06-19", "telefone": "(11) 98455-9001", "email": "roberto.almeida@email.com", "obs": "Diabético tipo 2." },
+  { "id": 5, "nome": "Patrícia Nogueira", "cpf": "731.205.118-92", "nascimento": "1996-01-07", "telefone": "(11) 99120-4456", "email": "patricia.n@email.com", "obs": "Sensibilidade dentinária." },
+  { "id": 6, "nome": "Anderson Reis", "cpf": "160.778.443-21", "nascimento": "1969-12-30", "telefone": "(11) 98677-3320", "email": "anderson.reis@email.com", "obs": "Tabagista. Avaliar saúde periodontal." },
+  { "id": 7, "nome": "Beatriz Carvalho", "cpf": "885.330.219-08", "nascimento": "2008-04-22", "telefone": "(11) 99033-8812", "email": "bia.carvalho@email.com", "obs": "Menor de idade. Responsável: Sandra Carvalho." },
+  { "id": 8, "nome": "Felipe Moraes", "cpf": "044.912.806-33", "nascimento": "1990-08-11", "telefone": "(11) 98800-1199", "email": "felipe.moraes@email.com", "obs": "Sem comorbidades relatadas." },
+  { "id": 9, "nome": "Sandra Oliveira", "cpf": "623.117.490-65", "nascimento": "1962-02-05", "telefone": "(11) 99455-6677", "email": "sandra.oliveira@email.com", "obs": "Osteoporose. Uso de bifosfonatos." },
+  { "id": 10, "nome": "Lucas Barreto", "cpf": "317.664.205-49", "nascimento": "1999-07-16", "telefone": "(11) 98122-0098", "email": "lucas.barreto@email.com", "obs": "" }
+]

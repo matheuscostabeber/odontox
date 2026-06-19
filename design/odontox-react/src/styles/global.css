@@ -1,0 +1,36 @@
+:root {
+  --ox-accent: #0E7A86;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; height: 100%; }
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #1B2B2E;
+}
+
+input, select, textarea, button { font-family: inherit; }
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--ox-accent) !important;
+  box-shadow: 0 0 0 3px rgba(14, 122, 134, .12);
+}
+
+/* scrollbar */
+.ox-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.ox-scroll::-webkit-scrollbar-thumb {
+  background: #d3dddd; border-radius: 10px;
+  border: 2px solid transparent; background-clip: padding-box;
+}
+
+/* linha de tabela com hover */
+.ox-row:hover { background: #F6FAFA !important; }
+
+/* animações de modal */
+@keyframes oxFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes oxPop { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.ox-modal-back { animation: oxFade .16s ease; }
+.ox-modal { animation: oxPop .2s cubic-bezier(.2, .7, .3, 1); }

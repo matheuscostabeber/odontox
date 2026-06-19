@@ -1,0 +1,7 @@
+[
+  { "id": 1, "nome": "Dra. Helena Marques", "cro": "CRO-SP 45821", "especialidade": "Clínico Geral", "telefone": "(11) 98812-4477", "email": "helena@odontox.com", "ativo": true, "cor": "#0E7A86" },
+  { "id": 2, "nome": "Dr. Rafael Antunes", "cro": "CRO-SP 51203", "especialidade": "Ortodontia", "telefone": "(11) 99124-7781", "email": "rafael@odontox.com", "ativo": true, "cor": "#2563EB" },
+  { "id": 3, "nome": "Dra. Camila Souza", "cro": "CRO-SP 48890", "especialidade": "Endodontia", "telefone": "(11) 99633-1290", "email": "camila@odontox.com", "ativo": true, "cor": "#7C3AED" },
+  { "id": 4, "nome": "Dr. Bruno Tavares", "cro": "CRO-SP 39114", "especialidade": "Implantodontia", "telefone": "(11) 98455-2093", "email": "bruno@odontox.com", "ativo": true, "cor": "#C2410C" },
+  { "id": 5, "nome": "Dra. Letícia Ramos", "cro": "CRO-SP 52771", "especialidade": "Odontopediatria", "telefone": "(11) 99001-7745", "email": "leticia@odontox.com", "ativo": false, "cor": "#0891B2" }
+]
