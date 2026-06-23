@@ -1,5 +1,129 @@
 # Tutorial Aluno 2 — CRUD de Especialidades Odontológicas + Select no Cadastro de Dentista
 
+Este tutorial é um passo a passo COMPLETO. Foi escrito para quem está com dificuldade. Não pule nenhum passo. Se você seguir tudo ao pé da letra, no final terá a feature funcionando ponta a ponta (ou seja: do banco de dados até a tela — o "backend", que é a parte que roda no servidor e guarda os dados, e o "frontend", que é a tela que você vê no navegador).
+
+---
+
+## Setup — preparando o computador do zero
+
+Antes de programar qualquer coisa, você precisa deixar o projeto rodando na sua máquina. Esta seção é independente: se você nunca instalou nada disso, siga na ordem. Se já tem algo instalado, só confira a versão. Não pule — quase todo problema no fim do tutorial vem de um passo de setup que ficou pela metade.
+
+### 1. Instalar os programas necessários
+
+Você vai precisar de quatro programas. Instale cada um e depois confira se ficou tudo certo.
+
+- **Git** — guarda o histórico do código e baixa o projeto. Baixe em <https://git-scm.com/downloads>.
+- **Python 3.11 ou mais novo** — a linguagem do backend. Baixe em <https://www.python.org/downloads/>. Atenção: pegue a versão **3.11** (ou 3.12/3.13, se existir). NÃO precisa ser exatamente a versão que o projeto sugere — veja o aviso no passo 3.
+- **Bun** — é o que instala as bibliotecas do frontend e roda a tela. Pense nele como um "ajudante" que baixa tudo que o site precisa e liga o servidor de desenvolvimento. Instale seguindo <https://bun.sh>. (Neste projeto NÃO usamos `npm`; o programa oficial é o Bun.)
+- **VSCode** — o editor de código onde você vai escrever tudo. Baixe em <https://code.visualstudio.com>.
+
+Depois de instalar, abra um terminal e confira as versões. Se cada comando responder com um número de versão, está funcionando:
+
+```bash
+git --version
+python --version
+bun --version
+```
+
+> Por que conferir? Porque se um desses não responder, o problema é de instalação — e é muito mais fácil resolver isso agora do que descobrir lá na frente que "nada funciona".
+
+### 2. Baixar o projeto (clonar o repositório)
+
+"Clonar" é só o nome técnico de baixar uma cópia completa do projeto, com todo o histórico, para o seu computador. Rode:
+
+```bash
+git clone https://github.com/matheuscostabeber/odontox.git
+```
+
+Isso cria uma pasta `odontox`. Tudo daqui pra frente acontece dentro dela. O projeto tem duas partes: a pasta `backend/` (servidor) e a pasta `frontend/` (tela).
+
+### 3. Preparar o backend
+
+O backend precisa de um "ambiente isolado" de Python, chamado **venv** (de *virtual environment*, ambiente virtual). Ele é uma caixinha separada onde as bibliotecas do projeto ficam, sem bagunçar o Python do resto do seu computador. Por que isso importa? Porque cada projeto pode precisar de versões diferentes das mesmas bibliotecas — o venv evita que um projeto atrapalhe o outro.
+
+> Aviso importante: o projeto tem um arquivo chamado `.python-version` que pode pedir o Python `3.14`. Essa versão talvez nem exista ainda na sua máquina. Se der erro ao criar o venv, force o Python 3.11 no comando (`python3.11 -m venv .venv`). Funciona igual.
+
+Entre na pasta do backend e crie o venv:
+
+```bash
+cd odontox/backend
+python -m venv .venv
+```
+
+Agora **ative** o venv (isso "liga" a caixinha; você verá `(.venv)` no início da linha do terminal):
+
+- No macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+- No Windows (PowerShell):
+
+```bash
+.venv\Scripts\Activate.ps1
+```
+
+Com o venv ativo, instale as bibliotecas que o projeto usa:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Preparar o frontend
+
+Em OUTRO terminal, entre na pasta do frontend e instale as bibliotecas com o Bun:
+
+```bash
+cd odontox/frontend
+bun install
+```
+
+### 5. Rodar tudo
+
+Você vai deixar dois terminais abertos ao mesmo tempo: um para o backend, outro para o frontend.
+
+- **Terminal do backend** (na pasta `backend/`, com o venv ativo):
+
+```bash
+.venv/bin/python main.py
+```
+
+- **Terminal do frontend** (na pasta `frontend/`):
+
+```bash
+bun run dev
+```
+
+Abra o navegador no endereço que o frontend mostrar (normalmente `http://localhost:5180`) e faça login. Se a tela abrir, o setup está completo.
+
+### 6. Criar uma branch para o seu trabalho
+
+Antes de começar a mexer no código, crie uma **branch** (uma "linha de trabalho" separada). Por que? Porque assim você mexe à vontade sem bagunçar a versão principal do projeto. Se algo der errado, é fácil voltar atrás, e seu trabalho fica organizado num lugar só. Rode (na pasta `odontox`):
+
+```bash
+git checkout -b minha-feature
+```
+
+A partir daqui você está na sua própria branch. Pode programar tranquilo.
+
+### 7. Instalar as extensões do VSCode
+
+Extensões deixam o editor mais esperto (avisam de erros, colorem o código, completam o que você digita). Abra o VSCode, vá no ícone de extensões (na barra lateral) e instale estas:
+
+- **Python** — suporte básico para escrever e rodar Python.
+- **Pylance** — autocompletar inteligente e avisos de erro no Python.
+- **Python Debugger** — permite pausar o programa e investigar passo a passo.
+- **Python Environments** — ajuda a escolher e gerenciar o venv certo dentro do editor.
+- **ESLint** — aponta erros e mau cheiro no código do frontend (JavaScript/TypeScript).
+- **SQLite3 Editor** — abre e visualiza o banco de dados SQLite direto no editor.
+- **vscode-icons** — coloca ícones nos arquivos, fica mais fácil achar as coisas.
+- **HTML CSS Support** — autocompletar para HTML e CSS.
+
+Pronto. Com o setup feito e os dois servidores rodando, siga para o tutorial.
+
+---
+
 Este tutorial é um passo a passo COMPLETO. Foi escrito para quem está com dificuldade. Não pule nenhum passo. Se você seguir tudo ao pé da letra, no final terá a feature funcionando ponta a ponta (backend + frontend).
 
 > Dica de ouro: faça **um arquivo de cada vez**, na ordem em que eles aparecem aqui. Não tente fazer tudo junto. A cada arquivo concluído, salve. No final tem uma seção "Como testar" e um "Checklist".
@@ -8,21 +132,25 @@ Este tutorial é um passo a passo COMPLETO. Foi escrito para quem está com difi
 
 ## O que você vai construir
 
-Você vai criar uma entidade nova chamada **Especialidade** (com um único campo: `nome`). Ela é uma "tabela de apoio": serve para alimentar uma lista de opções. Hoje, no cadastro de dentista, o campo "Especialidade" é um texto livre (o usuário digita qualquer coisa). Depois deste tutorial, esse campo vira um **select** (caixa de seleção) alimentado pela lista de especialidades cadastradas. Você vai espelhar EXATAMENTE o padrão que já existe para "Dentista": SQL puro, repositório, model, DTO de entrada, DTO de resposta, rota protegida, registro no startup, e do lado do front: tipo TypeScript, função no cliente de API, ação no contexto, uma página nova de CRUD, uma rota e um item no menu.
+Você vai criar uma coisa nova chamada **Especialidade** (com um único dado: o `nome`). Ela é uma "tabela de apoio": serve só para alimentar uma lista de opções. Hoje, quando você cadastra um dentista, o campo "Especialidade" é um texto livre — o usuário digita o que quiser (e pode errar a grafia, escrever de jeitos diferentes, etc). Depois deste tutorial, esse campo vira um **select** (uma caixa de seleção, em que você escolhe de uma lista pronta) com as especialidades já cadastradas. Você vai copiar EXATAMENTE o mesmo padrão que o projeto já usa para "Dentista", camada por camada. No backend: SQL puro (os comandos que falam com o banco de dados), repositório, model, DTO de entrada, DTO de resposta, rota protegida e o registro de tudo isso na inicialização do programa. No frontend: o tipo em TypeScript, a função que chama a API, a ação que guarda o estado, uma página nova de cadastro, uma rota e um item no menu. Não se preocupe com esses nomes agora — cada um é explicado quando aparece pela primeira vez.
 
-Resultado final:
+No final, você terá:
 
-- Uma tabela `especialidade` no SQLite, criada automaticamente no boot.
-- Endpoints REST: `GET/POST/PUT /api/especialidades` (e a lista também volta dentro de `GET /api/clinica/dados`).
-- Uma página `/especialidades` no SPA, com listagem e um modal de cadastro/edição.
+- Uma tabela `especialidade` no banco SQLite, criada sozinha quando o backend liga.
+- Endpoints REST (endpoint é cada "endereço" da API que o frontend chama para pedir ou enviar dados): `GET/POST/PUT /api/especialidades` — a lista também volta junto em `GET /api/clinica/dados`.
+- Uma página `/especialidades` no site, com a lista e uma janela (modal) para cadastrar e editar.
 - Um item "Especialidades" no menu lateral.
-- O campo "Especialidade" do modal de dentista vira um `<select>` com as opções vindas do backend.
+- O campo "Especialidade" da janela de dentista virando um `<select>` com as opções vindas do backend.
+
+Veja o resultado final do CRUD de especialidades funcionando (CRUD é a sigla, em inglês, para as quatro operações básicas de um cadastro: Criar, Ler, Atualizar e Apagar — aqui vamos usar Criar, Ler e Atualizar):
+
+![CRUD de especialidades funcionando: grade ordenada por nome com Endodontia, Implantodontia e Ortodontia](img/aluno2/02-crud-grade-ordenada.png)
 
 ---
 
 ## Pré-requisitos
 
-Você precisa conseguir rodar o projeto ANTES de começar. Abra dois terminais.
+Esta é a versão rápida do setup, para você ter os dois servidores rodando enquanto programa. Se você já fez a seção "Setup" acima, é só conferir. Abra dois terminais (duas janelas de terminal) — um fica com o backend, outro com o frontend.
 
 **Terminal 1 — Backend** (rodar a partir da pasta `backend/`):
 
@@ -37,24 +165,24 @@ O backend sobe na porta `8400` (padrão de dev). A documentação interativa fic
 
 ```bash
 cd /Volumes/Externo/Ifes/2026.1/PI20261/Projetos/odontox/frontend
-npm run dev
+bun run dev
 ```
 
-O Vite sobe na porta `5180` e faz proxy de `/api` para o backend (mesma origem, sem CORS). Abra `http://localhost:5180`, faça login com o usuário de seed (`odontox@ifes.site`).
+O Vite (a ferramenta que monta e serve a tela) sobe na porta `5180`. Ele redireciona tudo que começa com `/api` para o backend, então o navegador "enxerga" os dois como se fossem o mesmo site (por isso não há problema de CORS — aquele bloqueio que o navegador faz quando um site tenta chamar outro de endereço diferente). Abra `http://localhost:5180` e faça login com o usuário de exemplo já criado no banco (`odontox@ifes.site`).
 
-Para checar tipos do front sem buildar:
+Para conferir se os tipos do frontend estão certos sem precisar gerar o site inteiro:
 
 ```bash
-npx tsc -b --noEmit
+bunx tsc -b --noEmit
 ```
 
-Deixe os dois terminais rodando. O backend usa `reload` e o Vite tem hot reload, então as mudanças aparecem sozinhas na maioria das vezes. Quando você mexer em `main.py` ou criar arquivos novos no backend, às vezes é preciso parar (Ctrl+C) e subir de novo.
+Deixe os dois terminais rodando. O backend recarrega sozinho quando você salva um arquivo, e o Vite atualiza a tela na hora — então, na maioria das vezes, as mudanças aparecem sozinhas. Mas quando você mexe em `main.py` ou cria arquivos novos no backend, às vezes é preciso parar (Ctrl+C) e subir de novo.
 
 ---
 
 ## As camadas e a ordem de implementação
 
-O projeto tem camadas bem definidas. Vamos construir **de baixo para cima** (do banco até a tela). Essa ordem importa: cada camada depende da anterior. Se você começar pela tela, não terá o que chamar.
+O projeto é organizado em camadas (cada parte tem uma função bem definida). Vamos construir **de baixo para cima**: começamos pelo banco de dados e subimos até a tela. Essa ordem importa porque cada camada usa a anterior — se você começar pela tela, ela não vai ter nada para chamar, e nada funciona.
 
 Ordem que vamos seguir:
 
@@ -79,7 +207,7 @@ Ordem que vamos seguir:
 16. `frontend/src/components/odontox/Sidebar.tsx` — item no menu (EDIÇÃO).
 17. `frontend/src/components/odontox/modals/DentistFormModal.tsx` — trocar o TextInput por um `<Select>` (EDIÇÃO).
 
-> Por que essa ordem? O front (passos 9 em diante) só funciona se o backend já devolver os dados certos. E dentro do backend, a rota (passo 6) depende do repo, do model e dos DTOs. Por isso começamos pelo SQL e subimos.
+> Por que essa ordem? O frontend (passos 9 em diante) só funciona se o backend já estiver devolvendo os dados certos. E, dentro do backend, a rota (passo 6) precisa do repositório, do model e dos DTOs já prontos. Por isso começamos pelo SQL e subimos.
 
 ---
 
@@ -87,7 +215,7 @@ Ordem que vamos seguir:
 
 ### 1. `backend/sql/especialidade_sql.py` — ARQUIVO NOVO
 
-Aqui ficam as queries SQL como **constantes de string**, uma por operação. Não há ORM. Espelha o `dentista_sql.py`, mas com só um campo de dado (`nome`). Como é uma tabela de apoio simples, não temos `ativo`/`toggle` nem `DELETE` (seguimos o mesmo conjunto de operações de dentista: criar tabela, inserir, obter todos, obter por id, atualizar).
+Aqui ficam os comandos SQL (as instruções que falam direto com o banco de dados) guardados como textos fixos, um para cada operação. O projeto não usa nenhuma "mágica" que escreve SQL por você — o SQL é escrito à mão mesmo. Este arquivo copia o `dentista_sql.py`, mas com só um dado (`nome`). Como é uma tabela de apoio bem simples, não temos campo `ativo` nem botão de ligar/desligar, e também não temos `DELETE` (apagar). Vamos fazer o mesmo conjunto de operações do dentista: criar a tabela, inserir, pegar todos, pegar por id e atualizar.
 
 ```python
 CRIAR_TABELA = """
@@ -122,14 +250,14 @@ WHERE id = ?
 ```
 
 Pontos importantes:
-- `CREATE TABLE IF NOT EXISTS` — não dá erro se a tabela já existir (roda toda vez no boot).
-- `id INTEGER PRIMARY KEY AUTOINCREMENT` — o id é gerado pelo banco.
-- Os `?` são **placeholders** (prepared statements). NUNCA monte SQL com f-string interpolando valores — isso abre brecha de SQL injection. O repo passa os valores numa tupla.
-- `ORDER BY nome` deixa a lista ordenada (igual ao de dentista).
+- `CREATE TABLE IF NOT EXISTS` — o "IF NOT EXISTS" quer dizer "só crie se ainda não existir". Assim não dá erro mesmo rodando toda vez que o backend liga.
+- `id INTEGER PRIMARY KEY AUTOINCREMENT` — o `id` é o número que identifica cada linha, e o próprio banco gera esse número sozinho (você não precisa inventar).
+- Os `?` são lugares reservados para os valores (o nome técnico é *placeholder*). NUNCA monte o texto do SQL grudando os valores do usuário direto nele — isso abre uma brecha perigosa de segurança chamada SQL injection, em que alguém mal-intencionado consegue rodar comandos no seu banco. Em vez disso, o repositório manda os valores separados, numa tupla, e o banco encaixa nos `?` com segurança.
+- `ORDER BY nome` deixa a lista em ordem alfabética por nome (igual ao de dentista).
 
 ### 2. `backend/model/especialidade_model.py` — ARQUIVO NOVO
 
-O **model** é a entidade de domínio: uma `@dataclass` pura, em `snake_case`. Espelha `dentista_model.py`, mas só com `id` e `nome`.
+O **model** é a forma como a Especialidade existe dentro do programa: uma classe simples só para carregar os dados (`@dataclass`), com os nomes dos campos em `snake_case` (o estilo de escrever tudo minúsculo, separando palavras por underline, que é o padrão do Python). Copia o `dentista_model.py`, mas só com `id` e `nome`.
 
 ```python
 from dataclasses import dataclass
@@ -142,12 +270,12 @@ class Especialidade:
 ```
 
 Pontos importantes:
-- É só um carregador de dados (sem lógica). O repo converte linhas do banco nisto.
-- Note que não há `Optional` aqui porque os dois campos são sempre preenchidos.
+- É só um pacotinho de dados, sem nenhuma lógica. O repositório transforma cada linha que vem do banco numa Especialidade dessas.
+- Repare que não usamos `Optional` aqui (que serviria para dizer "este campo pode estar vazio"), porque `id` e `nome` estão sempre preenchidos.
 
 ### 3. `backend/repo/especialidade_repo.py` — ARQUIVO NOVO
 
-O **repositório** tem as funções que falam com o banco. São funções de módulo (não classes). Cada função abre a conexão com o context manager `obter_conexao()` (que já faz commit no sucesso e rollback no erro) e usa prepared statements. Espelha `dentista_repo.py`.
+O **repositório** é o arquivo que junta todas as funções que conversam com o banco de dados. São funções soltas no arquivo (não estão dentro de uma classe). Cada uma abre a conexão usando o `obter_conexao()`, que cuida do trabalho chato por você: se tudo der certo, ele salva as mudanças (faz o *commit*); se der erro no meio, ele desfaz tudo (faz o *rollback*), pra não deixar o banco pela metade. E todas usam aqueles `?` seguros do passo anterior. Copia o `dentista_repo.py`.
 
 ```python
 """Repositório de Especialidades."""
@@ -219,17 +347,17 @@ def atualizar(especialidade: Especialidade) -> bool:
 ```
 
 Pontos importantes:
-- `_row_to_especialidade(row)` (com underline na frente = função privada) converte uma linha `sqlite3.Row` no model. Toda entidade tem essa função no padrão do projeto.
-- `inserir(...)` retorna `cursor.lastrowid` (o id novo gerado pelo banco).
-- `obter_todos()` retorna `list[Especialidade]`; `obter_por_id(id)` retorna `Optional[Especialidade]` (pode ser `None`).
-- `atualizar(...)` retorna `cursor.rowcount > 0` (True se realmente alterou alguma linha).
-- A vírgula em `(especialidade.nome,)` é OBRIGATÓRIA: sem ela, `(x)` não é uma tupla, é só um parênteses. `execute` precisa de tupla.
-- `criar_tabela()` é a função que o `main.py` vai chamar no boot. **Tem que existir com esse nome exato**, senão o registro no startup quebra.
-- Importamos `logger` para manter o mesmo padrão dos outros repos (mesmo que aqui não usemos — é o estilo do projeto).
+- `_row_to_especialidade(row)` (o underline na frente é só uma convenção para dizer "esta função é de uso interno") pega uma linha do banco e a transforma numa Especialidade. Toda parte do projeto tem uma função assim.
+- `inserir(...)` devolve `cursor.lastrowid`, que é o `id` novo que o banco acabou de gerar.
+- `obter_todos()` devolve uma lista de Especialidades; `obter_por_id(id)` devolve uma Especialidade ou `None` (nada), caso não exista nenhuma com aquele id.
+- `atualizar(...)` devolve `True` se realmente mudou alguma linha (`cursor.rowcount > 0`).
+- A vírgula em `(especialidade.nome,)` é OBRIGATÓRIA. Sem ela, `(x)` é só um parêntese em volta do valor — não é uma tupla (uma listinha fixa de valores). E o `execute` exige uma tupla. É um erro fácil de cometer e difícil de enxergar.
+- `criar_tabela()` é a função que o `main.py` vai chamar quando o backend ligar. **Ela TEM que existir com esse nome exato**, senão o registro da tabela na inicialização quebra.
+- Importamos o `logger` (que serve para registrar mensagens de log) só para manter o mesmo padrão dos outros repositórios — aqui a gente nem chega a usar, mas é o estilo do projeto.
 
 ### 4. `backend/dtos/especialidade_dto.py` — ARQUIVO NOVO
 
-O **DTO de entrada** descreve o JSON que o front ENVIA num POST/PUT. É um `pydantic.BaseModel`. Aqui validamos o `nome`. Usamos o validator pronto `validar_string_obrigatoria` de `dtos/validators.py` (mesmo padrão do `PacienteDTO`).
+DTO quer dizer "objeto de transferência de dados" (do inglês *Data Transfer Object*). É só um molde que descreve o formato dos dados que vão de um lado para o outro. O **DTO de entrada** descreve o JSON (o formato de texto em que o frontend manda os dados) que chega quando alguém cadastra ou edita uma especialidade. Aqui é onde a gente confere se o `nome` é válido. Para isso, reusamos uma checagem pronta, `validar_string_obrigatoria`, que mora em `dtos/validators.py` (o `PacienteDTO` faz igualzinho).
 
 ```python
 from pydantic import BaseModel, Field, field_validator
@@ -248,14 +376,14 @@ class EspecialidadeDTO(BaseModel):
 ```
 
 Pontos importantes:
-- `nome: str = Field(..., ...)` — os três pontos (`...`) significam "obrigatório".
-- O validator levanta `ValueError` se o nome for inválido; o FastAPI transforma isso automaticamente numa resposta **422** com o contrato de erro do projeto. Você não trata isso na rota.
-- O nome do campo (`nome`) tem que bater EXATAMENTE com o que o front envia. O front vai enviar `{ nome: '...' }`, então está certo.
-- A convenção do projeto é prefixar o validator com underline (`_validar_nome`).
+- Em `nome: str = Field(..., ...)`, os três pontos (`...`) querem dizer "este campo é obrigatório".
+- A checagem dispara um erro se o nome for inválido. O FastAPI (a ferramenta do backend) pega esse erro sozinho e devolve uma resposta com o código **422** (que é o número que significa "você me mandou dados inválidos"), já no formato de erro que o projeto usa. Você não precisa escrever nada disso na rota — acontece automático.
+- O nome do campo (`nome`) tem que ser EXATAMENTE igual ao que o frontend manda. O frontend envia `{ nome: '...' }`, então bate certinho.
+- O projeto costuma colocar um underline na frente do nome da checagem (`_validar_nome`).
 
 ### 5. `backend/dtos/responses/especialidade_response.py` — ARQUIVO NOVO
 
-O **DTO de resposta** descreve o JSON que a API DEVOLVE. Tem um classmethod construtor a partir do model. Aqui é onde, se houvesse campos `snake_case` no model, traduziríamos para `camelCase` (como `foto_url` → `fotoUrl` em dentista). Como aqui só temos `id` e `nome`, não há tradução. Espelha `dentista_response.py`.
+O **DTO de resposta** descreve o JSON que a API DEVOLVE (o formato dos dados que o backend manda de volta para a tela). Ele tem uma função que monta a resposta a partir do model. É aqui que, se houvesse campos escritos no estilo do Python (com underline, tipo `foto_url`), a gente os traduziria para o estilo do JavaScript (sem underline, tipo `fotoUrl` — como acontece no dentista). Como aqui só temos `id` e `nome`, não há nada para traduzir. Copia o `dentista_response.py`.
 
 ```python
 """Schemas de resposta do módulo de especialidades."""
@@ -280,12 +408,12 @@ class EspecialidadeResponse(BaseModel):
 ```
 
 Pontos importantes:
-- O classmethod se chama `de_especialidade` (padrão `de_<entidade>`, igual `de_dentista`).
-- Esse Response é o "contrato" com o front: o tipo TypeScript `Especialidade` (passo 9) tem que ter os mesmos campos (`id`, `nome`).
+- A função se chama `de_especialidade` (o padrão é `de_<nome da coisa>`, igual ao `de_dentista`).
+- Esse Response é o "combinado" com o frontend: o tipo `Especialidade` em TypeScript (passo 9) precisa ter os mesmos campos (`id`, `nome`). Se um lado tiver um campo que o outro não tem, as coisas param de bater.
 
 ### 6. `backend/routes/especialidade_routes.py` — ARQUIVO NOVO
 
-O **router** expõe os endpoints REST. Espelha `dentista_routes.py`, mas SEM o `toggle` (especialidade não tem `ativo`). Toda handler é `async def`, recebe `request: Request` como primeiro parâmetro, termina com `usuario_logado: Optional[UsuarioLogado] = None`, e tem o decorator `@requer_autenticacao()` logo abaixo do decorator de rota.
+O **router** é o arquivo que cria os endpoints REST (lembra: cada endpoint é um endereço da API que o frontend chama). Copia o `dentista_routes.py`, mas SEM o ligar/desligar (especialidade não tem campo `ativo`). Cada função de rota usa `async def` (porque ela espera respostas que demoram, sem travar o resto), recebe `request: Request` como primeiro parâmetro, termina com `usuario_logado: Optional[UsuarioLogado] = None`, e tem o `@requer_autenticacao()` logo abaixo da linha que define a rota.
 
 ```python
 """
@@ -417,16 +545,16 @@ async def atualizar(
 ```
 
 Pontos importantes:
-- `router = APIRouter(prefix="/especialidades")` — o prefixo é SEM `/api`. O `main.py` adiciona o `/api` na frente. Resultado final: `/api/especialidades`.
-- `@requer_autenticacao()` fica ABAIXO de `@router.get/post/put`. Ele exige usuário logado (401 se anônimo) e injeta o `usuario_logado`. Por isso, dentro da função, `usuario_logado` chega preenchido e usamos `assert usuario_logado is not None` (deixa o type checker feliz).
-- Erros sempre com `raise HTTPException(status_code=..., detail="...")`. Use 404 quando o recurso não existe e 500 quando o repo falha. Os handlers globais convertem para o contrato `{detail, type, errors}`.
-- No POST, criamos o model com `id=0` (o banco gera o id real); depois lemos de volta com `obter_por_id` para devolver os dados já com o id.
-- No PUT, primeiro checamos se existe (404 se não), depois atualizamos e relemos.
-- A validação do `nome` (422) já acontece sozinha por causa do DTO; você não escreve nada para isso na rota.
+- Em `router = APIRouter(prefix="/especialidades")`, o prefixo é SEM `/api`. É o `main.py` que coloca o `/api` na frente depois. O endereço final fica `/api/especialidades`.
+- `@requer_autenticacao()` fica ABAIXO de `@router.get/post/put`. Ele exige que o usuário esteja logado (devolve 401, "não autorizado", se for um anônimo) e entrega o `usuario_logado` para a função. Por isso, dentro da função, esse valor já chega preenchido, e usamos `assert usuario_logado is not None` só para o verificador de tipos do editor ficar tranquilo.
+- Quando algo dá errado, sempre sinalize com `raise HTTPException(status_code=..., detail="...")`. Use 404 ("não encontrado") quando o recurso não existe e 500 ("erro do servidor") quando o repositório falha. O projeto pega esses erros automaticamente e os entrega no formato padrão `{detail, type, errors}`.
+- No POST, criamos o model com `id=0` (porque o banco é quem vai gerar o id de verdade); depois lemos de volta com `obter_por_id` para devolver os dados já com o id certo.
+- No PUT, primeiro checamos se a especialidade existe (404 se não), depois atualizamos e lemos de novo.
+- A checagem do `nome` (que pode gerar o 422) já acontece sozinha por causa do DTO; você não escreve nada para isso aqui na rota.
 
 ### 7. `backend/main.py` — EDIÇÃO (passo crítico!)
 
-Este é o passo que os alunos MAIS erram. Sem ele, a tabela não é criada e a rota não existe. São **quatro mudanças** neste arquivo.
+Este é o passo que mais gente esquece. Sem ele, a tabela não é criada e a rota nem existe — e aí parece que "nada funciona", mesmo com todos os arquivos certos. São **quatro mudanças** neste arquivo. Vá com calma e confira uma por uma.
 
 **Mudança 7.1 — importar o repo novo.** Procure o bloco de imports de repositórios (começa em `from repo import (`):
 
@@ -496,7 +624,7 @@ TABELAS = [
 ]
 ```
 
-> O loop logo abaixo (`for repo, nome in TABELAS: repo.criar_tabela()`) é o que de fato cria a tabela no boot. Por isso o repo PRECISA ter a função `criar_tabela()` (passo 3).
+> O trecho logo abaixo (`for repo, nome in TABELAS: repo.criar_tabela()`) passa por cada item da lista e cria a tabela quando o backend liga. É por isso que o repositório PRECISA ter a função `criar_tabela()` (passo 3) — é ela que esse trecho chama.
 
 **Mudança 7.4 — registrar o router.** Procure a lista `ROUTERS = [`. Adicione a tupla do router de especialidades (logo após a de dentistas):
 
@@ -529,13 +657,13 @@ ROUTERS = [
 ]
 ```
 
-> O loop `for router, tags, nome in ROUTERS: app.include_router(router, prefix=API_PREFIX, ...)` inclui tudo sob `/api`. É aqui que `/especialidades` vira `/api/especialidades`.
+> O trecho `for router, tags, nome in ROUTERS: app.include_router(router, prefix=API_PREFIX, ...)` registra todas as rotas sob `/api`. É aqui que `/especialidades` finalmente vira `/api/especialidades`.
 
-**Reinicie o backend** (Ctrl+C no Terminal 1 e `.venv/bin/python main.py` de novo). Olhe os logs: deve aparecer `Tabela 'especialidade' criada/verificada` e `Router de especialidades incluído em /api`. Se aparecer um erro de import, releia os passos 7.1 e 7.2.
+**Reinicie o backend** (Ctrl+C no Terminal 1 e rode `.venv/bin/python main.py` de novo). Olhe as mensagens: devem aparecer `Tabela 'especialidade' criada/verificada` e `Router de especialidades incluído em /api`. Se aparecer um erro de import (de algo que não foi encontrado), volte e releia os passos 7.1 e 7.2 — provavelmente um nome ficou diferente.
 
 ### 8. `backend/routes/clinica_routes.py` — EDIÇÃO
 
-O endpoint agregador `GET /clinica/dados` devolve tudo de uma vez no boot do SPA. Vamos incluir a lista de especialidades ali, para o front já carregar as opções junto com o resto. São **três mudanças** neste arquivo.
+Existe um endpoint que junta tudo: o `GET /clinica/dados` devolve dentistas, pacientes, consultas etc. de uma vez só, logo que o site abre (SPA é o nome desse tipo de site que carrega uma vez e vai trocando as telas sem recarregar a página). Vamos incluir a lista de especialidades nesse pacote, para o frontend já receber as opções junto com o resto, sem precisar de uma chamada extra. São **três mudanças** neste arquivo.
 
 **Mudança 8.1 — importar o Response.** No bloco de imports de schemas de saída, adicione:
 
@@ -584,19 +712,19 @@ from repo import (
 ```
 
 Pontos importantes:
-- A chave do JSON é `"especialidades"` (plural, minúsculo). O front (passo 10) vai ler exatamente essa chave. Se você escrever diferente de um lado, quebra.
+- A chave do JSON é `"especialidades"` (plural, tudo minúsculo). O frontend (passo 10) vai procurar exatamente por essa palavra. Se você escrever de um jeito num lado e diferente no outro, a lista nunca aparece.
 
-**Teste rápido do backend** antes de ir para o front. Com o backend rodando e logado no app pelo navegador (para ter o cookie de sessão), você pode também testar pela doc interativa em `http://localhost:8400/docs`: lá aparecem os novos endpoints `Especialidades`. Crie uma especialidade pelo POST e confira no GET.
+**Teste rápido do backend** antes de ir para o frontend. Com o backend rodando e você logado no app pelo navegador (para ter o cookie de sessão, que é o que prova que você entrou), abra a documentação interativa em `http://localhost:8400/docs`: lá aparecem os novos endpoints `Especialidades`. Crie uma especialidade pelo POST e confira no GET que ela voltou.
 
 ---
 
 ## Parte 2 — Frontend
 
-> Lembrete do projeto: **não existe Zod neste projeto** (o `lib/schemas.ts` da documentação antiga não está presente para o domínio da clínica). A validação real é a do backend (422). No front você só confia no contrato. Não crie schema Zod para especialidade.
+> Lembrete do projeto: **este projeto não usa Zod** (o Zod é uma biblioteca que valida dados no frontend; aqui ela não está em uso para a parte da clínica). Quem valida de verdade é o backend, que devolve 422 quando algo está errado. No frontend, você só confia no formato combinado. Não crie validação Zod para especialidade.
 
 ### 9. `frontend/src/lib/types.ts` — EDIÇÃO
 
-Os tipos TypeScript espelham os Response DTOs do backend. Vamos adicionar `Especialidade`. Coloque logo após a interface `Dentista` (na seção "OdontoX — domínio da clínica").
+Os tipos em TypeScript são a versão, no frontend, dos DTOs de resposta do backend — eles dizem ao editor qual é o formato dos dados que chegam. Vamos adicionar o tipo `Especialidade`. Coloque logo depois do `Dentista` (na seção "OdontoX — domínio da clínica").
 
 ```ts
 export interface Especialidade {
@@ -606,12 +734,12 @@ export interface Especialidade {
 ```
 
 Pontos importantes:
-- Os campos batem com o `EspecialidadeResponse` do backend (`id`, `nome`).
-- Não invente campos a mais; o tipo é o "contrato" com a API.
+- Os campos são os mesmos do `EspecialidadeResponse` do backend (`id`, `nome`).
+- Não invente campos a mais; este tipo é o "combinado" com a API e tem que refletir exatamente o que ela devolve.
 
 ### 10. `frontend/src/lib/odontox/clinicaApi.ts` — EDIÇÃO
 
-Aqui ficam as chamadas HTTP de domínio (sobre o cliente central `@/lib/api`). São **três mudanças**.
+Aqui ficam as funções que de fato chamam a API pela internet (elas usam por baixo o cliente central `@/lib/api`, que cuida dos detalhes chatos da requisição). São **três mudanças**.
 
 **Mudança 10.1 — importar o tipo.** Na linha de import de tipos, adicione `Especialidade`:
 
@@ -619,7 +747,7 @@ Aqui ficam as chamadas HTTP de domínio (sobre o cliente central `@/lib/api`). S
 import type { Atendimento, Consulta, Dentista, Especialidade, Paciente, StatusConsulta } from '@/lib/types'
 ```
 
-**Mudança 10.2 — incluir no `DadosClinica`.** A interface `DadosClinica` descreve o que `GET /clinica/dados` devolve. Adicione a lista:
+**Mudança 10.2 — incluir no `DadosClinica`.** A interface `DadosClinica` é a descrição, no frontend, do que o `GET /clinica/dados` devolve. Adicione a lista:
 
 ```ts
 export interface DadosClinica {
@@ -631,9 +759,9 @@ export interface DadosClinica {
 }
 ```
 
-> O nome `especialidades` aqui tem que ser IGUAL à chave do JSON que o backend devolve (passo 8.3).
+> O nome `especialidades` aqui tem que ser IGUAL à chave que o backend usa no JSON (passo 8.3). Mesma palavra, mesma grafia.
 
-**Mudança 10.3 — adicionar as funções de API.** Dentro do objeto `clinicaApi`, adicione um bloco de especialidades (pode colocar logo após o bloco de dentistas):
+**Mudança 10.3 — adicionar as funções da API.** Dentro do objeto `clinicaApi`, adicione um bloco de especialidades (pode colocar logo depois do bloco de dentistas):
 
 ```ts
   // ---- especialidades ----
@@ -642,12 +770,12 @@ export interface DadosClinica {
 ```
 
 Pontos importantes:
-- Os caminhos são RELATIVOS a `/api` (não escreva `/api/especialidades`, só `/especialidades`). O cliente central adiciona o prefixo, o cookie de sessão e o header CSRF automaticamente.
-- `api.post<Especialidade>` diz que a resposta é um `Especialidade`. Isso vem do Response DTO do backend.
+- Os caminhos não levam o `/api` na frente (escreva só `/especialidades`, e não `/api/especialidades`). O cliente central coloca o `/api`, o cookie de sessão e o cabeçalho de segurança CSRF sozinho, em toda chamada.
+- `api.post<Especialidade>` avisa ao editor que a resposta vai ser uma `Especialidade`. Isso vem direto do DTO de resposta do backend.
 
 ### 11. `frontend/src/context/ClinicContext.tsx` — EDIÇÃO
 
-O contexto carrega `GET /clinica/dados` no boot e guarda as listas. Páginas leem daqui (não fazem fetch direto). Vamos: (a) guardar `especialidades` no estado, (b) tipar a ação `saveEspecialidade`, (c) implementar a ação, (d) expor no `value`. São **quatro mudanças**.
+O "contexto" é uma área compartilhada de memória do frontend: ele chama o `GET /clinica/dados` assim que o site abre e guarda todas as listas ali. As páginas leem desse lugar (em vez de cada uma sair chamando a API por conta própria). Vamos fazer quatro coisas: (a) guardar `especialidades` na memória, (b) declarar a ação `saveEspecialidade`, (c) escrever essa ação, (d) deixá-la disponível para as páginas. São **quatro mudanças** (numeradas de 11.1 a 11.6, porque algumas têm subpassos).
 
 **Mudança 11.1 — importar o tipo.** Na linha de import de tipos, adicione `Especialidade`:
 
@@ -667,7 +795,7 @@ interface ClinicData {
 }
 ```
 
-**Mudança 11.3 — declarar a ação no contrato.** Na interface `ClinicContextValue`, adicione a assinatura (pode colocar perto de `saveDentist`):
+**Mudança 11.3 — declarar a ação.** Na interface `ClinicContextValue` (que lista tudo que o contexto oferece), adicione a assinatura da função (pode colocar perto de `saveDentist`):
 
 ```ts
   saveEspecialidade: (form: Partial<Especialidade> & { id?: number }) => Promise<void>
@@ -679,7 +807,7 @@ interface ClinicData {
   const [data, setData] = useState<ClinicData>({ dentists: [], especialidades: [], patients: [], consultas: [], atendimentos: [] })
 ```
 
-> Você NÃO precisa mexer no `useEffect` que faz `api.getAll()`. Como o backend agora devolve `especialidades` dentro de `/clinica/dados`, o `setData(d)` já preenche a lista sozinho.
+> Você NÃO precisa mexer no trecho que carrega os dados (`api.getAll()`). Como o backend agora já manda `especialidades` dentro de `/clinica/dados`, o `setData(d)` preenche a lista sozinho.
 
 **Mudança 11.5 — implementar a ação.** Logo após o bloco `// ---- dentistas ----` (depois de `toggleDentist`), adicione:
 
@@ -696,7 +824,7 @@ interface ClinicData {
   }, [])
 ```
 
-**Mudança 11.6 — expor no `value`.** Procure o objeto `const value: ClinicContextValue = { ... }` e adicione `saveEspecialidade` na lista:
+**Mudança 11.6 — deixar disponível no `value`.** Procure o objeto `const value: ClinicContextValue = { ... }` e adicione `saveEspecialidade` na lista (é isso que torna a função alcançável pelas páginas):
 
 ```ts
   const value: ClinicContextValue = {
@@ -716,12 +844,12 @@ interface ClinicData {
 ```
 
 Pontos importantes:
-- O padrão de `saveEspecialidade` é igual ao `saveDentist`: se tem `id`, faz PUT e substitui no array; senão faz POST e acrescenta. O estado é atualizado de forma imutável (`map` / spread `[...]`).
-- Como `...data` está no `value`, a lista `especialidades` fica disponível para as páginas via `useClinic()`.
+- A lógica de `saveEspecialidade` é igual à de `saveDentist`: se já tem `id`, é uma edição (faz PUT e troca o item na lista); se não tem, é um cadastro novo (faz POST e adiciona no fim). Em vez de mexer na lista antiga, criamos uma lista nova (com `map` e com o `[...]`) — esse jeito de "nunca alterar, sempre recriar" é o que o React espera para atualizar a tela direitinho.
+- Como o `...data` está no `value`, a lista `especialidades` fica acessível para as páginas através do `useClinic()`.
 
 ### 12. `frontend/src/pages/odontox/EspecialidadesPage.tsx` — ARQUIVO NOVO
 
-A página de CRUD. Segue o padrão das páginas: default export com o mesmo nome do arquivo, inline styles, dados de `useClinic()`, modal via `useModal()`. É mais simples que `DentistasPage` porque a entidade só tem `nome`.
+A página de cadastro (a tela com a lista e o botão de adicionar). Ela segue o padrão das outras páginas: exporta um componente com o mesmo nome do arquivo, os estilos vão escritos direto no JSX (inline), os dados vêm do `useClinic()` e a janela de cadastro é aberta pelo `useModal()`. É mais simples que a `DentistasPage`, porque a especialidade só tem o `nome`.
 
 ```tsx
 import { useClinic } from '@/context/ClinicContext';
@@ -763,19 +891,21 @@ export default function EspecialidadesPage() {
 ```
 
 Pontos importantes:
-- `const { especialidades } = useClinic();` — lê a lista do contexto (não faz fetch ad-hoc).
-- `open('especialidadeForm')` abre o modal de criação; `open('especialidadeForm', { entity: e })` abre em modo edição passando a especialidade. O tipo de modal `'especialidadeForm'` é registrado no passo 14.
-- Ícones (`Plus`, `Pencil`) vêm de `@/components/odontox/icons`. Não use bibliotecas de ícone externas.
-- Inline styles (`CSSProperties`); o projeto não usa Bootstrap.
+- `const { especialidades } = useClinic();` — pega a lista direto do contexto, sem fazer uma chamada própria à API.
+- `open('especialidadeForm')` abre a janela em modo "criar"; `open('especialidadeForm', { entity: e })` abre em modo "editar", já passando a especialidade clicada. O nome `'especialidadeForm'` é registrado no passo 14.
+- Os ícones (`Plus`, `Pencil`) vêm de `@/components/odontox/icons`. Não use bibliotecas de ícone de fora.
+- Os estilos vão escritos direto no código (inline); o projeto não usa Bootstrap nem nada parecido.
 
 ### 13. `frontend/src/components/odontox/modals/EspecialidadeFormModal.tsx` — ARQUIVO NOVO
 
-O modal de cadastro/edição. Usa o hook `useForm` e os componentes `Modal`/`ModalFooter`/`TextInput`. Espelha o `DentistFormModal`, bem mais enxuto.
+A janela (modal) de cadastro e edição. Ela usa o `useForm` (um ajudante que controla os campos do formulário) e as peças prontas `Modal`, `ModalFooter` e `TextInput`. Copia o `DentistFormModal`, mas com um detalhe a mais: ela **trata o erro 422** do backend e mostra a mensagem ali mesmo, na própria janela, em vez de fechar do nada sem explicar o que houve.
 
 ```tsx
+import { useState } from 'react';
 import { useClinic } from '@/context/ClinicContext';
 import { useModal } from '@/context/ModalContext';
 import { useForm } from '@/hooks/useForm';
+import { ApiError } from '@/lib/api';
 import Modal from '@/components/odontox/Modal';
 import ModalFooter from '@/components/odontox/ModalFooter';
 import { TextInput } from '@/components/odontox/Field';
@@ -784,6 +914,7 @@ import type { Especialidade } from '@/lib/types';
 export default function EspecialidadeFormModal({ entity }: { entity?: Especialidade }) {
   const { saveEspecialidade } = useClinic();
   const { close } = useModal();
+  const [erro, setErro] = useState<string | null>(null);
 
   const { form, field } = useForm(
     entity
@@ -791,12 +922,34 @@ export default function EspecialidadeFormModal({ entity }: { entity?: Especialid
       : { id: undefined as number | undefined, nome: '' }
   );
 
-  const save = () => { saveEspecialidade(form); close(); };
+  const save = async () => {
+    setErro(null);
+    try {
+      await saveEspecialidade(form);
+      close();
+    } catch (e) {
+      // O backend valida o nome (mínimo 2 caracteres) e retorna 422 com a
+      // mensagem no campo `errors.nome`. Mostramos inline em vez de fechar.
+      if (e instanceof ApiError) {
+        setErro(e.campo('nome') ?? e.message);
+      } else {
+        setErro('Não foi possível salvar a especialidade.');
+      }
+    }
+  };
 
   return (
     <Modal onClose={close} maxWidth={460} title={entity ? 'Editar especialidade' : 'Nova especialidade'}>
       <div className="ox-scroll" style={{ padding: '22px 24px', display: 'flex', flexDirection: 'column', gap: 16, overflow: 'auto' }}>
-        <TextInput label="Nome" placeholder="Ex.: Ortodontia" {...field('nome')} />
+        <TextInput
+          label="Nome"
+          placeholder="Ex.: Ortodontia"
+          {...field('nome')}
+          style={erro ? { border: '1px solid #BE123C' } : undefined}
+        />
+        {erro && (
+          <p role="alert" style={{ margin: 0, color: '#BE123C', fontSize: 13, fontWeight: 600 }}>{erro}</p>
+        )}
       </div>
       <ModalFooter onCancel={close} onSave={save} saveLabel="Salvar especialidade" />
     </Modal>
@@ -805,14 +958,16 @@ export default function EspecialidadeFormModal({ entity }: { entity?: Especialid
 ```
 
 Pontos importantes:
-- `useForm(...)` recebe o estado inicial. Se `entity` existe (edição), pré-preenche; senão começa vazio com `id: undefined`.
-- `{...field('nome')}` conecta o input ao estado (faz o `value` e `onChange` automaticamente).
-- `save()` chama `saveEspecialidade(form)` (a ação do contexto, passo 11) e fecha o modal.
-- `entity?: Especialidade` é opcional: sem ele = criar, com ele = editar.
+- `useForm(...)` recebe os valores iniciais do formulário. Se veio uma `entity` (edição), ele já começa preenchido; senão, começa vazio com `id: undefined` (ainda sem id).
+- `{...field('nome')}` liga o campo de texto ao formulário (cuida do valor que aparece e do que muda quando você digita, sem você precisar escrever isso).
+- `save()` é **assíncrono** (espera o backend responder): faz `await saveEspecialidade(form)` e só fecha a janela se deu certo. Se o backend recusar (por exemplo, nome com menos de 2 letras, que dá **422**), o `await` dispara um `ApiError` e o programa cai no `catch`.
+- O `ApiError.campo('nome')` lê a primeira mensagem de erro do campo `nome` (que vem dentro do `errors`, no formato `{detail, type, errors}` do backend). É exatamente o texto **"Nome deve ter no mínimo 2 caracteres."** que aparece em vermelho embaixo do campo, com a borda dele também ficando vermelha.
+- Cuidado com o estilo de erro: o `TextInput` já usa `border` (a forma curta, que junta cor, espessura e estilo). Por isso aqui também usamos `border: '1px solid #BE123C'` (forma curta) — se você misturar `borderColor` (forma separada) com `border`, o React reclama no console.
+- `entity?: Especialidade` é opcional: sem ele, é criar; com ele, é editar.
 
 ### 14. `frontend/src/components/odontox/modals/ModalRoot.tsx` — EDIÇÃO
 
-O `ModalRoot` decide qual modal renderizar com base no `type`. São **duas mudanças**.
+O `ModalRoot` é o "porteiro" das janelas: ele olha o `type` (o nome do modal que foi pedido) e decide qual janela mostrar. São **duas mudanças**.
 
 **Mudança 14.1 — importar o modal.** Adicione o import junto dos outros:
 
@@ -822,7 +977,7 @@ import EspecialidadeFormModal from './EspecialidadeFormModal';
 import AtendimentoFormModal from './AtendimentoFormModal';
 ```
 
-**Mudança 14.2 — adicionar o case.** Dentro do `switch (modal.type)`, adicione (perto do `dentistForm`):
+**Mudança 14.2 — adicionar o caso.** Dentro do `switch (modal.type)` (que é uma lista de "se for tal nome, mostre tal janela"), adicione um caso novo (perto do `dentistForm`):
 
 ```tsx
     case 'dentistForm':
@@ -832,12 +987,12 @@ import AtendimentoFormModal from './AtendimentoFormModal';
 ```
 
 Pontos importantes:
-- A string `'especialidadeForm'` tem que ser IGUAL à que você usou no `open('especialidadeForm', ...)` da página (passo 12). Se digitar diferente, o modal não abre.
-- `entity={modal.entity as never}` segue o mesmo padrão dos outros modais.
+- O texto `'especialidadeForm'` tem que ser IGUAL ao que você usou no `open('especialidadeForm', ...)` da página (passo 12). Se digitar diferente em um dos lugares, a janela simplesmente não abre.
+- `entity={modal.entity as never}` é igual ao que os outros modais já fazem; pode copiar sem medo.
 
 ### 15. `frontend/src/router.tsx` — EDIÇÃO
 
-Registre a rota `/especialidades` dentro do guard de autenticação. São **duas mudanças**.
+Registre a rota `/especialidades` dentro da área protegida por login (o "guard" é o porteiro que só deixa entrar quem está logado). São **duas mudanças**.
 
 **Mudança 15.1 — importar a página.** Adicione junto dos outros imports de página:
 
@@ -859,7 +1014,7 @@ import EspecialidadesPage from '@/pages/odontox/EspecialidadesPage'
 ```
 
 Pontos importantes:
-- A rota tem que ficar DENTRO do `<OdontoxGuard />` → `<AppLayout />` (assim ela é protegida por login e ganha a sidebar). Não coloque junto das rotas públicas (`/login`).
+- A rota tem que ficar DENTRO do `<OdontoxGuard />` → `<AppLayout />`. É isso que faz ela exigir login e aparecer com o menu lateral. Não coloque junto das rotas abertas a todos (como `/login`), senão qualquer um acessaria sem entrar.
 
 ### 16. `frontend/src/components/odontox/Sidebar.tsx` — EDIÇÃO
 
@@ -883,12 +1038,12 @@ const NAV = [
 ```
 
 Pontos importantes:
-- `to` tem que ser igual ao `path` da rota (`/especialidades`).
-- `Icon` é um componente de `icons.tsx`. Ícones disponíveis: `Check`, `Calendar`, `Users`, `Tooth`, `LogOut`, `ChevronLeft/Right/Down`, `Plus`, `Search`, `Edit`, `Pencil`, `Phone`, `Mail`, `AlertTriangle`. Escolha um e importe.
+- O `to` tem que ser igual ao `path` da rota (`/especialidades`), senão o clique no menu leva para lugar nenhum.
+- O `Icon` é um ícone vindo de `icons.tsx`. Os disponíveis são: `Check`, `Calendar`, `Users`, `Tooth`, `LogOut`, `ChevronLeft/Right/Down`, `Plus`, `Search`, `Edit`, `Pencil`, `Phone`, `Mail`, `AlertTriangle`. Escolha um e importe.
 
 ### 17. `frontend/src/components/odontox/modals/DentistFormModal.tsx` — EDIÇÃO
 
-Agora o passo principal pedido: trocar o `TextInput` "Especialidade" por um `<Select>` alimentado pela lista. O projeto já tem um componente `Select` pronto em `@/components/odontox/Field`. São **três mudanças**.
+Agora o passo principal de tudo: trocar o campo de digitar "Especialidade" por uma caixa de seleção (`<Select>`) com as opções vindas da lista. Boa notícia: o projeto já tem um `Select` pronto em `@/components/odontox/Field`, então você só precisa usá-lo. São **três mudanças**.
 
 **Mudança 17.1 — importar o `Select`.** Na linha que importa de `Field`, adicione `Select`:
 
@@ -928,12 +1083,12 @@ E substitua o segundo campo (`Especialidade`) por um `Select`:
 ```
 
 Pontos importantes:
-- O componente `Select` recebe `options` como um array de `{ value, label }`. A primeira opção `{ value: '', label: 'Selecione...' }` é o placeholder.
-- `...especialidades.map((e) => ({ value: e.nome, label: e.nome }))` transforma a lista do contexto nas opções. Usamos o `nome` como `value` porque o campo `especialidade` do dentista guarda o texto da especialidade (é assim que o backend de dentista espera). Não mudamos o contrato do dentista.
-- `{...field('especialidade')}` conecta o select ao mesmo campo do form que antes estava no TextInput. O `useForm` já trata `onChange` de `<select>`, então funciona sem mexer em mais nada.
-- Tudo o mais do modal (nome, telefone, e-mail, ativo, salvar) continua igual.
+- O `Select` recebe um `options`, que é uma lista de `{ value, label }` — o `value` é o que fica guardado e o `label` é o que aparece na tela. A primeira opção, `{ value: '', label: 'Selecione...' }`, é só o texto-convite (placeholder).
+- `...especialidades.map((e) => ({ value: e.nome, label: e.nome }))` pega a lista do contexto e a transforma nas opções da caixa. Usamos o `nome` como `value` porque o dentista guarda a especialidade como texto (é assim que o backend de dentista já espera receber). Não estamos mudando nada do dentista.
+- `{...field('especialidade')}` liga o select ao mesmo campo do formulário que antes estava no campo de digitar. O `useForm` já sabe lidar com a mudança de um `<select>`, então funciona sem mexer em mais nada.
+- Todo o resto da janela (nome, telefone, e-mail, situação, botão de salvar) continua igual.
 
-> Por que `value` é o `nome` e não o `id`? Porque a entidade Dentista, no backend, guarda `especialidade` como TEXTO (string), não como id. Estamos só trocando "digitar" por "escolher da lista" — sem alterar o formato dos dados de dentista. Se um dia o dentista passasse a guardar `especialidade_id`, aí o `value` seria o `id` e haveria mudança no backend de dentista (fora do escopo deste tutorial).
+> Por que o `value` é o `nome` e não o `id`? Porque, no backend, o dentista guarda a especialidade como TEXTO (uma string), e não como número de id. A gente só está trocando "digitar à mão" por "escolher de uma lista" — sem mudar o formato dos dados do dentista. Se um dia o dentista passasse a guardar o id da especialidade, aí sim o `value` seria o `id`, e isso exigiria mudar o backend do dentista (o que está fora deste tutorial).
 
 ---
 
@@ -942,37 +1097,51 @@ Pontos importantes:
 ### Passo a passo manual (fluxo de tela)
 
 1. **Reinicie o backend** (Terminal 1: Ctrl+C, depois `.venv/bin/python main.py`). Confira nos logs: `Tabela 'especialidade' criada/verificada` e `Router de especialidades incluído em /api`.
-2. **Garanta o front rodando** (Terminal 2: `npm run dev`). Abra `http://localhost:5180` e faça login.
-3. No menu lateral, clique em **Especialidades**. A página deve abrir (vazia no começo).
-4. Clique em **Nova especialidade**, digite `Ortodontia` e salve. Ela aparece na lista (sem recarregar a página).
-5. Cadastre mais umas: `Endodontia`, `Implantodontia`.
-6. Clique em **Editar** numa delas, mude o nome, salve. A alteração aparece na hora.
-7. Vá em **Dentistas** → **Novo dentista** (ou Editar). O campo **Especialidade** agora é um **select** com as opções que você cadastrou. Escolha uma e salve o dentista.
+2. **Garanta o front rodando** (Terminal 2: `bun run dev`). Abra `http://localhost:5180` e faça login.
+3. No menu lateral, clique em **Especialidades**. A página deve abrir (vazia no começo). Assim:
+
+   ![Página de especialidades recém-aberta, ainda sem nenhuma cadastrada](img/aluno2/01-crud-estado-vazio.png)
+
+4. Clique em **Nova especialidade**, digite `Ortodontia` e salve. Ela aparece na lista (sem recarregar a página). O modal tem um único campo "Nome". Aproveite para testar a validação: digite só uma letra e tente salvar — o backend recusa e a mensagem de erro aparece em vermelho, sem fechar a janela:
+
+   ![Modal Nova especialidade mostrando o erro de validação ao tentar salvar com um nome muito curto](img/aluno2/03-validacao-422-inline.png)
+
+5. Cadastre mais umas: `Endodontia`, `Implantodontia`. A lista fica ordenada por nome:
+
+   ![Grade de especialidades com Endodontia, Implantodontia e Ortodontia, cada uma com o botão Editar](img/aluno2/02-crud-grade-ordenada.png)
+
+6. Clique em **Editar** numa delas, mude o nome, salve. A alteração aparece na hora (o modal de edição abre já preenchido com o nome atual).
+7. Vá em **Dentistas** → **Novo dentista** (ou Editar). O campo **Especialidade** agora é um **select** (uma caixa de seleção, em vez de um campo de digitação) que começa em "Selecione..." seguido das especialidades que você cadastrou. Escolha uma e salve o dentista:
+
+   ![Campo Especialidade como select no modal de dentista, mostrando a opção Selecione e as especialidades cadastradas](img/aluno2/04-select-no-form-dentista.png)
+
 8. Confira que o dentista salvou com a especialidade escolhida (aparece no card do dentista).
 
 ### Teste pela documentação interativa (opcional)
 
 Com o backend rodando e logado no navegador (para ter o cookie de sessão), abra `http://localhost:8400/docs`. Devem aparecer os endpoints sob a tag **Especialidades**. Teste o `POST /api/especialidades` com `{ "nome": "Periodontia" }` e depois o `GET /api/especialidades`.
 
+![Documentação interativa mostrando a tag Especialidades com os três endpoints GET, POST e PUT](img/aluno2/05-docs-tag-especialidades.png)
+
 ### Typecheck do front
 
 Antes de considerar pronto, rode na pasta `frontend/`:
 
 ```bash
-npx tsc -b --noEmit
+bunx tsc -b --noEmit
 ```
 
-Não pode haver erro de tipo. Se reclamar de `especialidades` não existir em algum lugar, você esqueceu de editar `types.ts`, `clinicaApi.ts` ou `ClinicContext.tsx`.
+Não pode aparecer nenhum erro de tipo. Se reclamar que `especialidades` não existe em algum lugar, é sinal de que você esqueceu de editar o `types.ts`, o `clinicaApi.ts` ou o `ClinicContext.tsx`.
 
 ### Teste automatizado (opcional, se quiser seguir o padrão)
 
-O projeto usa pytest no backend. Um teste de unidade simples do repo (rodar a partir de `backend/`):
+O projeto usa pytest no backend (uma ferramenta que roda testes automáticos para você). Um teste simples do repositório (rode a partir de `backend/`):
 
 ```bash
 .venv/bin/python -m pytest tests/unit -k especialidade
 ```
 
-Se você quiser escrever um, espelhe um teste existente de `dentista_repo` em `tests/unit/`, criando, lendo e atualizando uma especialidade. (Não é obrigatório para a feature funcionar.)
+Se quiser escrever um, copie a ideia de um teste que já existe para o `dentista_repo` em `tests/unit/`, criando, lendo e atualizando uma especialidade. (Não é obrigatório para a feature funcionar.)
 
 ---
 
@@ -988,7 +1157,7 @@ Se você quiser escrever um, espelhe um teste existente de `dentista_repo` em `t
    Nome de arquivo ou função errado. O repo PRECISA ter a função `criar_tabela()` (sem ela o loop de `TABELAS` quebra). Os imports usam o nome exato do arquivo: `from repo import especialidade_repo`, `from routes.especialidade_routes import router as especialidade_router`. Confira a grafia.
 
 4. **"403 ao salvar pelo front (mas no /docs funciona)."**
-   É CSRF. O cliente central (`@/lib/api`) já manda o header `X-CSRF-Token` e o cookie automaticamente — mas só se você usar `clinicaApi`/`api` (passos 10 e 11). NUNCA chame `fetch` direto na página. Se você criou a chamada fora do `clinicaApi`, mova para lá.
+   É um problema de CSRF (uma proteção de segurança que exige um "selo" extra em cada envio). O cliente central (`@/lib/api`) já manda esse selo (`X-CSRF-Token`) e o cookie sozinho — mas só se você passar pelo `clinicaApi`/`api` (passos 10 e 11). NUNCA chame a internet direto (`fetch`) na página. Se você criou a chamada fora do `clinicaApi`, mova para lá.
 
 5. **"O campo Especialidade do dentista some / não mostra as opções."**
    Confira o passo 17: importou `Select`? pegou `especialidades` do `useClinic()`? O `options` precisa começar com o placeholder `{ value: '', label: 'Selecione...' }` e depois o `...especialidades.map(...)`. Se `especialidades` for `undefined`, é porque o passo 11.4 (inicializar `especialidades: []` no estado) ficou faltando.
@@ -997,7 +1166,7 @@ Se você quiser escrever um, espelhe um teste existente de `dentista_repo` em `t
    No `ClinicContext.tsx` faltou um dos quatro pontos: declarar na interface `ClinicContextValue` (11.3), implementar a função (11.5) e colocá-la no objeto `value` (11.6). Os três têm que existir.
 
 7. **"422 ao salvar especialidade com nome curto."**
-   Isso é esperado: o DTO exige nome com 2 a 100 caracteres (passo 4). Digite um nome válido. A mensagem de erro vem do backend; se quiser exibir bonito, leia `ApiError.errors` no front (mas o toast padrão já mostra a mensagem).
+   Isso é o esperado: o DTO exige nome de 2 a 100 caracteres (passo 4). O backend devolve **422** com a mensagem em `errors.nome`. No passo 13, a janela trata esse erro: o `save()` faz `await saveEspecialidade(...)` dentro de um `try/catch`, lê `ApiError.campo('nome')` e mostra **"Nome deve ter no mínimo 2 caracteres."** em vermelho embaixo do campo (e a janela NÃO fecha). Este projeto não tem aquele avisinho que aparece no canto da tela (toast) — quem mostra a mensagem é a própria janela. Digite um nome válido (2 letras ou mais) para conseguir salvar.
 
 ---
 
@@ -1026,7 +1195,7 @@ Marque cada item só depois de conferir de verdade.
 - [ ] `frontend/src/router.tsx`: import da página + rota `/especialidades` dentro do guard.
 - [ ] `frontend/src/components/odontox/Sidebar.tsx`: item `Especialidades` no `NAV`.
 - [ ] `frontend/src/components/odontox/modals/DentistFormModal.tsx`: `Select` importado, `especialidades` do contexto, campo "Especialidade" virou `<Select>`.
-- [ ] `npx tsc -b --noEmit` passa sem erros.
+- [ ] `bunx tsc -b --noEmit` passa sem erros.
 
 **Fluxo de ponta a ponta**
 - [ ] Consigo criar, listar e editar especialidades pela tela `/especialidades`.
