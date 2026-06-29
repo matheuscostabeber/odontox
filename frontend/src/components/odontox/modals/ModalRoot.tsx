@@ -3,6 +3,7 @@ import ConsultaDetailModal from './ConsultaDetailModal';
 import ConsultaFormModal from './ConsultaFormModal';
 import PatientFormModal from './PatientFormModal';
 import DentistFormModal from './DentistFormModal';
+import EspecialidadeFormModal from './EspecialidadeFormModal';
 import AtendimentoFormModal from './AtendimentoFormModal';
 
 // Renderiza o modal ativo conforme o tipo no ModalContext.
@@ -19,6 +20,8 @@ export default function ModalRoot() {
       return <PatientFormModal entity={modal.entity as never} />;
     case 'dentistForm':
       return <DentistFormModal entity={modal.entity as never} />;
+    case 'especialidadeForm':
+      return <EspecialidadeFormModal entity={modal.entity as never} />;
     case 'atendimentoForm':
       return <AtendimentoFormModal consultaId={modal.consultaId as number} />;
     default:

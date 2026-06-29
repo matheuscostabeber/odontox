@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Logo } from './Logo'
-import { Calendar, Users, Tooth, LogOut } from './icons'
+import { Calendar, Users, Tooth, Check, LogOut } from './icons'
 import { useAuthStore } from '@/store/authStore'
 import { ACCENT, CLINIC_NAME, USER } from '@/lib/odontox/constants'
 
@@ -8,6 +8,8 @@ const NAV = [
   { to: '/agenda', label: 'Agenda', Icon: Calendar },
   { to: '/pacientes', label: 'Pacientes', Icon: Users, match: ['/pacientes', '/paciente'] },
   { to: '/dentistas', label: 'Dentistas', Icon: Tooth },
+  { to: '/especialidades', label: 'Especialidades', Icon: Check },
+
 ]
 
 export default function Sidebar() {

@@ -2,10 +2,11 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
 import { clinicaApi as api } from '@/lib/odontox/clinicaApi'
 import type { AtendimentoData } from '@/lib/odontox/clinicaApi'
-import type { Atendimento, Consulta, Dentista, Paciente, StatusConsulta } from '@/lib/types'
+import type { Atendimento, Consulta, Dentista, Especialidade, Paciente, StatusConsulta } from '@/lib/types'
 
 interface ClinicData {
   dentists: Dentista[]
+  especialidades: Especialidade[]
   patients: Paciente[]
   consultas: Consulta[]
   atendimentos: Atendimento[]
@@ -40,13 +41,14 @@ interface ClinicContextValue extends ClinicData {
   savePatient: (form: Partial<Paciente> & { id?: number }) => Promise<void>
   saveDentist: (form: Partial<Dentista> & { id?: number }) => Promise<void>
   toggleDentist: (id: number) => Promise<void>
+  saveEspecialidade: (form: Partial<Especialidade> & { id?: number }) => Promise<void>
   saveAtendimento: (consultaId: number, form: AtendimentoForm, existingId?: number) => Promise<void>
 }
 
 const ClinicContext = createContext<ClinicContextValue | null>(null)
 
 export function ClinicProvider({ children }: { children: ReactNode }) {
-  const [data, setData] = useState<ClinicData>({ dentists: [], patients: [], consultas: [], atendimentos: [] })
+  const [data, setData] = useState<ClinicData>({ dentists: [], especialidades: [], patients: [], consultas: [], atendimentos: [] })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -123,6 +125,18 @@ export function ClinicProvider({ children }: { children: ReactNode }) {
     setData((d) => ({ ...d, dentists: d.dentists.map((x) => (x.id === id ? updated : x)) }))
   }, [])
 
+  // ---- especialidades ----
+  const saveEspecialidade = useCallback(async (form: Partial<Especialidade> & { id?: number }) => {
+    if (form.id) {
+      const updated = await api.updateEspecialidade(form.id, form)
+      setData((d) => ({ ...d, especialidades: d.especialidades.map((x) => (x.id === form.id ? updated : x)) }))
+    } else {
+      const created = await api.createEspecialidade(form)
+      setData((d) => ({ ...d, especialidades: [...d.especialidades, created] }))
+    }
+  }, [])
+
+
   // ---- atendimentos ----
   const saveAtendimento = useCallback(
     async (consultaId: number, form: AtendimentoForm, existingId?: number) => {
@@ -151,6 +165,7 @@ export function ClinicProvider({ children }: { children: ReactNode }) {
     savePatient,
     saveDentist,
     toggleDentist,
+    saveEspecialidade,
     saveAtendimento,
   }
 

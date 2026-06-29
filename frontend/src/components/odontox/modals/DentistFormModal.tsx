@@ -4,12 +4,12 @@ import { useForm } from '@/hooks/useForm';
 import { ACCENT } from '@/lib/odontox/constants';
 import Modal from '@/components/odontox/Modal';
 import ModalFooter from '@/components/odontox/ModalFooter';
-import { Field, TextInput } from '@/components/odontox/Field';
+import { Field, TextInput, Select } from '@/components/odontox/Field';
 import type { CSSProperties } from 'react';
 import type { Dentista } from '@/lib/types';
 
 export default function DentistFormModal({ entity }: { entity?: Dentista }) {
-  const { saveDentist } = useClinic();
+  const { saveDentist, especialidades } = useClinic();
   const { close } = useModal();
 
   const { form, field, set } = useForm(
@@ -32,7 +32,14 @@ export default function DentistFormModal({ entity }: { entity?: Dentista }) {
         <TextInput label="Nome" placeholder="Dr(a). Nome Sobrenome" {...field('nome')} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           <TextInput label="CRO" placeholder="CRO-SP 00000" {...field('cro')} />
-          <TextInput label="Especialidade" placeholder="Ex.: Ortodontia" {...field('especialidade')} />
+          <Select
+            label="Especialidade"
+            options={[
+              { value: '', label: 'Selecione...' },
+              ...especialidades.map((e) => ({ value: e.nome, label: e.nome })),
+            ]}
+            {...field('especialidade')}
+          />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           <TextInput label="Telefone" placeholder="(11) 90000-0000" {...field('telefone')} />
