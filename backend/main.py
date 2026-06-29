@@ -28,6 +28,7 @@ from repo import (
     configuracao_repo,
     indices_repo,
     dentista_repo,
+    especialidade_repo,
     paciente_repo,
     consulta_repo,
     atendimento_repo,
@@ -38,6 +39,7 @@ from routes.auth_routes import router as auth_router
 from routes.usuario_routes import router as usuario_router
 from routes.clinica_routes import router as clinica_router
 from routes.dentista_routes import router as dentista_router
+from routes.especialidade_routes import router as especialidade_router
 from routes.paciente_routes import router as paciente_router
 from routes.consulta_routes import router as consulta_router
 from routes.atendimento_routes import router as atendimento_router
@@ -91,6 +93,7 @@ TABELAS = [
     (usuario_repo, "usuario"),
     (configuracao_repo, "configuracao"),
     (dentista_repo, "dentista"),
+    (especialidade_repo, "especialidade"),
     (paciente_repo, "paciente"),
     (consulta_repo, "consulta"),
     (atendimento_repo, "atendimento"),
@@ -127,6 +130,7 @@ ROUTERS = [
     (usuario_router, ["Usuário"], "usuário"),
     (clinica_router, ["Clinica"], "clinica"),
     (dentista_router, ["Dentistas"], "dentistas"),
+    (especialidade_router, ["Especialidades"], "especialidades"),
     (paciente_router, ["Pacientes"], "pacientes"),
     (consulta_router, ["Consultas"], "consultas"),
     (atendimento_router, ["Atendimentos"], "atendimentos"),
