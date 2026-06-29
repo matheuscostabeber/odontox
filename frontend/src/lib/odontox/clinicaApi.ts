@@ -1,13 +1,14 @@
 // Cliente de domínio da clínica OdontoX, sobre o cliente HTTP central (@/lib/api).
 // Caminhos relativos a /api (o prefixo é adicionado pelo cliente central).
 import { api } from '@/lib/api'
-import type { Atendimento, Consulta, Dentista, Paciente, StatusConsulta } from '@/lib/types'
+import type { Atendimento, Consulta, Dentista, Paciente, Procedimento, StatusConsulta } from '@/lib/types'
 
 export interface DadosClinica {
   dentists: Dentista[]
   patients: Paciente[]
   consultas: Consulta[]
   atendimentos: Atendimento[]
+  procedimentos: Procedimento[]
 }
 
 export interface ConsultaPayload {
@@ -49,6 +50,10 @@ export const clinicaApi = {
   createDentist: (f: Partial<Dentista>) => api.post<Dentista>('/dentistas', f),
   updateDentist: (id: number, f: Partial<Dentista>) => api.put<Dentista>('/dentistas/' + id, f),
   toggleDentist: (id: number) => api.patch<Dentista>('/dentistas/' + id + '/toggle'),
+
+  // ---- procedimentos ----
+  createProcedimento: (f: Record<string, unknown>) => api.post<Procedimento>('/procedimentos', f),
+  updateProcedimento: (id: number, f: Record<string, unknown>) => api.put<Procedimento>('/procedimentos/' + id, f),
 
   // ---- atendimentos ----
   saveAtendimento: (consultaId: number, data: AtendimentoData, existingId?: number) =>

@@ -11,6 +11,7 @@ import AgendaPage from '@/pages/odontox/AgendaPage'
 import PacientesPage from '@/pages/odontox/PacientesPage'
 import PacienteDetalhePage from '@/pages/odontox/PacienteDetalhePage'
 import DentistasPage from '@/pages/odontox/DentistasPage'
+import ProcedimentosPage from '@/pages/odontox/ProcedimentosPage'
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
               { path: '/pacientes', element: <PacientesPage /> },
               { path: '/paciente/:id', element: <PacienteDetalhePage /> },
               { path: '/dentistas', element: <DentistasPage /> },
+              { path: '/procedimentos', element: <ProcedimentosPage /> },
             ],
           },
         ],

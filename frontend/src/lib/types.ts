@@ -50,6 +50,13 @@ export interface Dentista {
   fotoUrl?: string | null
 }
 
+export interface Procedimento {
+  id: number
+  nome: string
+  duracaoMinutos: number
+  valorReferencia: number
+}
+
 export interface Paciente {
   id: number
   nome: string

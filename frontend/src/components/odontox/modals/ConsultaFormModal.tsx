@@ -15,7 +15,7 @@ interface ConsultaPrefill {
 }
 
 export default function ConsultaFormModal({ entity, prefill }: { entity?: Consulta; prefill?: ConsultaPrefill }) {
-  const { patients, dentists, saveConsulta } = useClinic();
+  const { patients, dentists, procedimentos, saveConsulta } = useClinic();
   const { close } = useModal();
 
   const initial = entity
@@ -38,6 +38,10 @@ export default function ConsultaFormModal({ entity, prefill }: { entity?: Consul
     () => dentists.filter((d) => d.ativo).map((d) => ({ value: d.id, label: d.nome + ' · ' + d.especialidade })),
     [dentists]
   );
+  const procedimentoOptions = useMemo(
+    () => procedimentos.map((p) => ({ value: p.nome, label: p.nome })),
+    [procedimentos]
+  );
 
   const save = () => { saveConsulta(form); close(); };
 
@@ -51,7 +55,7 @@ export default function ConsultaFormModal({ entity, prefill }: { entity?: Consul
           <TextInput label="Hora" type="time" {...field('hora')} />
           <Select label="Duração" options={DURACAO_OPTIONS} {...field('duracao')} />
         </div>
-        <TextInput label="Procedimento previsto" placeholder="Ex.: Profilaxia, Restauração, Avaliação…" {...field('procedimento')} />
+        <Select label="Procedimento previsto" options={procedimentoOptions} {...field('procedimento')} />
         <Select label="Status" options={STATUS_OPTIONS} {...field('status')} />
         <TextArea label="Observações" rows={3} placeholder="Anotações da consulta…" {...field('observacoes')} />
       </div>

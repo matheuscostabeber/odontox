@@ -21,6 +21,7 @@ from dtos.responses.dentista_response import DentistaResponse
 from dtos.responses.paciente_response import PacienteResponse
 from dtos.responses.consulta_response import ConsultaResponse
 from dtos.responses.atendimento_response import AtendimentoResponse
+from dtos.responses.procedimento_response import ProcedimentoResponse
 
 # Models
 from model.usuario_logado_model import UsuarioLogado
@@ -31,6 +32,7 @@ from repo import (
     paciente_repo,
     consulta_repo,
     atendimento_repo,
+    procedimento_repo,
 )
 
 # Utilities
@@ -69,5 +71,9 @@ async def dados(
         "atendimentos": [
             AtendimentoResponse.de_atendimento(a)
             for a in atendimento_repo.obter_todos()
+        ],
+         "procedimentos": [
+            ProcedimentoResponse.de_procedimento(p)
+            for p in procedimento_repo.obter_todos()
         ],
     }

@@ -4,6 +4,7 @@ import ConsultaFormModal from './ConsultaFormModal';
 import PatientFormModal from './PatientFormModal';
 import DentistFormModal from './DentistFormModal';
 import AtendimentoFormModal from './AtendimentoFormModal';
+import ProcedimentoFormModal from './ProcedimentoFormModal';
 
 // Renderiza o modal ativo conforme o tipo no ModalContext.
 export default function ModalRoot() {
@@ -21,6 +22,8 @@ export default function ModalRoot() {
       return <DentistFormModal entity={modal.entity as never} />;
     case 'atendimentoForm':
       return <AtendimentoFormModal consultaId={modal.consultaId as number} />;
+    case 'procedimentoForm':
+      return <ProcedimentoFormModal entity={modal.entity as never} />;
     default:
       return null;
   }

@@ -8,6 +8,7 @@ const NAV = [
   { to: '/agenda', label: 'Agenda', Icon: Calendar },
   { to: '/pacientes', label: 'Pacientes', Icon: Users, match: ['/pacientes', '/paciente'] },
   { to: '/dentistas', label: 'Dentistas', Icon: Tooth },
+  { to: '/procedimentos', label: 'Procedimentos', Icon: Tooth },
 ]
 
 export default function Sidebar() {

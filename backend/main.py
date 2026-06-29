@@ -31,6 +31,7 @@ from repo import (
     paciente_repo,
     consulta_repo,
     atendimento_repo,
+    procedimento_repo,
 )
 
 # Rotas (API JSON)
@@ -41,6 +42,7 @@ from routes.dentista_routes import router as dentista_router
 from routes.paciente_routes import router as paciente_router
 from routes.consulta_routes import router as consulta_router
 from routes.atendimento_routes import router as atendimento_router
+from routes.procedimento_routes import router as procedimento_router
 
 # Seeds
 from util.seed_data import inicializar_dados
@@ -94,6 +96,7 @@ TABELAS = [
     (paciente_repo, "paciente"),
     (consulta_repo, "consulta"),
     (atendimento_repo, "atendimento"),
+    (procedimento_repo, "procedimento"),
 ]
 
 logger.info("Criando tabelas do banco de dados...")
@@ -130,6 +133,7 @@ ROUTERS = [
     (paciente_router, ["Pacientes"], "pacientes"),
     (consulta_router, ["Consultas"], "consultas"),
     (atendimento_router, ["Atendimentos"], "atendimentos"),
+    (procedimento_router, ["Procedimentos"], "procedimentos"),
 ]
 
 for router, tags, nome in ROUTERS:
