@@ -18,6 +18,7 @@ from fastapi import APIRouter, Request
 
 # Schemas (saída)
 from dtos.responses.dentista_response import DentistaResponse
+from dtos.responses.especialidade_response import EspecialidadeResponse
 from dtos.responses.paciente_response import PacienteResponse
 from dtos.responses.consulta_response import ConsultaResponse
 from dtos.responses.atendimento_response import AtendimentoResponse
@@ -28,6 +29,7 @@ from model.usuario_logado_model import UsuarioLogado
 # Repositories
 from repo import (
     dentista_repo,
+    especialidade_repo,
     paciente_repo,
     consulta_repo,
     atendimento_repo,
@@ -59,6 +61,9 @@ async def dados(
     return {
         "dentists": [
             DentistaResponse.de_dentista(d) for d in dentista_repo.obter_todos()
+        ],
+        "especialidades": [
+            EspecialidadeResponse.de_especialidade(e) for e in especialidade_repo.obter_todos()
         ],
         "patients": [
             PacienteResponse.de_paciente(p) for p in paciente_repo.obter_todos()
